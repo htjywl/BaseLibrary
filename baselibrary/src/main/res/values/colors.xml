@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#47aefe</color>
+    <color name="tc_aaaaaa">#aaaaaa</color>
+    <color name="bg_cccccc">#cccccc</color>
+    <color name="bg_eeeeee">#eeeeee</color>
+    <color name="tc_888888">#888888</color>
+    <color name="bg_dcdcdc">#dcdcdc</color>
+</resources>
