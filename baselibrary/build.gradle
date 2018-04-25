@@ -1,136 +1,20 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
-ext {
+// 这里添加下面两行代码。
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
-    android = [
-            compileSdkVersion       : 27,
-            buildToolsVersion       : "27.0.3",
-            minSdkVersion           : 15,
-            targetSdkVersion        : 26,
-            versionCode             : 14,
-            versionName             : "3.2.3",
-    ]
-
-    version = [
-            androidSupportSdkVersion: "27.0.0",
-            retrofitSdkVersion      : "2.3.0",
-            dagger2SdkVersion       : "2.10",
-            butterknifeSdkVersion   : "8.6.0",
-            rxlifecycleSdkVersion   : "1.0",
-            rxlifecycle2SdkVersion  : "2.0.1",
-            espressoSdkVersion      : "2.2.2",
-            canarySdkVersion        : "1.5.1"
-    ]
-
-    dependencies = [
-            //support
-            "appcompat-v7"             : "com.android.support:appcompat-v7:${version["androidSupportSdkVersion"]}",
-            "design"                   : "com.android.support:design:${version["androidSupportSdkVersion"]}",
-            "support-v4"               : "com.android.support:support-v4:${version["androidSupportSdkVersion"]}",
-            "cardview-v7"              : "com.android.support:cardview-v7:${version["androidSupportSdkVersion"]}",
-            "annotations"              : "com.android.support:support-annotations:${version["androidSupportSdkVersion"]}",
-            "recyclerview-v7"          : "com.android.support:recyclerview-v7:${version["androidSupportSdkVersion"]}",
-
-            //network
-            "retrofit"                 : "com.squareup.retrofit2:retrofit:${version["retrofitSdkVersion"]}",
-            "retrofit-converter-gson"  : "com.squareup.retrofit2:converter-gson:${version["retrofitSdkVersion"]}",
-            "retrofit-adapter-rxjava"  : "com.squareup.retrofit2:adapter-rxjava:${version["retrofitSdkVersion"]}",
-            "retrofit-adapter-rxjava2" : "com.squareup.retrofit2:adapter-rxjava2:${version["retrofitSdkVersion"]}",
-            "okhttp3"                  : "com.squareup.okhttp3:okhttp:3.8.0",
-            "okhttp-urlconnection"     : "com.squareup.okhttp:okhttp-urlconnection:2.0.0",
-            "glide"                    : "com.github.bumptech.glide:glide:4.0.0-RC1",
-            "picasso"                  : "com.squareup.picasso:picasso:2.5.2",
-
-            //view
-            "autolayout"               : "com.zhy:autolayout:1.4.5",
-            "butterknife"              : "com.jakewharton:butterknife:${version["butterknifeSdkVersion"]}",
-            "butterknife-compiler"     : "com.jakewharton:butterknife-compiler:${version["butterknifeSdkVersion"]}",
-            "pickerview"               : "com.contrarywind:Android-PickerView:3.2.5",
-            "photoview"                : "com.github.chrisbanes.photoview:library:1.2.3",
-            "numberprogressbar"        : "com.daimajia.numberprogressbar:library:1.2@aar",
-            "nineoldandroids"          : "com.nineoldandroids:library:2.4.0",
-            "paginate"                 : "com.github.markomilos:paginate:0.5.1",
-            "vlayout"                  : "com.alibaba.android:vlayout:1.0.6@aar",
-            "constraintlayout"         : "com.android.support.constraint:constraint-layout:1.0.2",
-            "FlycoTabLayout"           : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
-
-            //rx1
-            "rxandroid"                : "io.reactivex:rxandroid:1.2.1",
-            "rxjava"                   : "io.reactivex:rxjava:1.3.0",
-            "rxlifecycle"              : "com.trello:rxlifecycle:${version["rxlifecycleSdkVersion"]}",
-            "rxlifecycle-components"   : "com.trello:rxlifecycle-components:${version["rxlifecycleSdkVersion"]}",
-            "rxcache"                  : "com.github.VictorAlbertos.RxCache:runtime:1.7.0-1.x",
-            "rxcache-jolyglot-gson"    : "com.github.VictorAlbertos.Jolyglot:gson:0.0.3",
-            "rxbinding-recyclerview-v7": "com.jakewharton.rxbinding:rxbinding-recyclerview-v7:1.0.1",
-            "rxpermissions"            : "com.tbruyelle.rxpermissions:rxpermissions:0.9.4@aar",
-            "rxerrorhandler"           : "me.jessyan:rxerrorhandler:1.0.1",
-
-            //rx2
-            "rxandroid2"               : "io.reactivex.rxjava2:rxandroid:2.0.1",
-            "rxjava2"                  : "io.reactivex.rxjava2:rxjava:2.1.0",
-            "rxlifecycle2"             : "com.trello.rxlifecycle2:rxlifecycle:${version["rxlifecycle2SdkVersion"]}",
-            "rxlifecycle2-components"  : "com.trello.rxlifecycle2:rxlifecycle-components:${version["rxlifecycle2SdkVersion"]}",
-            "rxcache2"                 : "com.github.VictorAlbertos.RxCache:runtime:1.8.0-2.x",
-            "rxpermissions2"           : "com.tbruyelle.rxpermissions2:rxpermissions:0.9.4@aar",
-            "rxerrorhandler2"          : "me.jessyan:rxerrorhandler:2.0.2",
-
-            //tools
-            "dagger2"                  : "com.google.dagger:dagger:${version["dagger2SdkVersion"]}",
-            "dagger2-compiler"         : "com.google.dagger:dagger-compiler:${version["dagger2SdkVersion"]}",
-            "androideventbus"          : "org.simple:androideventbus:1.0.5.1",
-            "otto"                     : "com.squareup:otto:1.3.8",
-            "gson"                     : "com.google.code.gson:gson:2.8.0",
-            "multidex"                 : "com.android.support:multidex:1.0.1",
-            "javax.annotation"         : "javax.annotation:jsr250-api:1.0",
-            "arouter"                  : "com.alibaba:arouter-api:1.2.1.1",
-            "arouter-compiler"         : "com.alibaba:arouter-compiler:1.1.2.1",
-            "progressmanager"          : "me.jessyan:progressmanager:1.2.5",
-
-            //test
-            "junit"                    : "junit:junit:4.12",
-            "androidJUnitRunner"       : "android.support.test.runner.AndroidJUnitRunner",
-            "runner"                   : "com.android.support.test:runner:0.5",
-            "espresso-core"            : "com.android.support.test.espresso:espresso-core:${version["espressoSdkVersion"]}",
-            "espresso-contrib"         : "com.android.support.test.espresso:espresso-contrib:${version["espressoSdkVersion"]}",
-            "espresso-intents"         : "com.android.support.test.espresso:espresso-intents:${version["espressoSdkVersion"]}",
-            "mockito-core"             : "org.mockito:mockito-core:1.+",
-            "timber"                   : "com.jakewharton.timber:timber:4.5.1",
-            "canary-debug"             : "com.squareup.leakcanary:leakcanary-android:${version["canarySdkVersion"]}",
-            "canary-release"           : "com.squareup.leakcanary:leakcanary-android-no-op:${version["canarySdkVersion"]}",
-            "umeng-analytics"          : "com.umeng.analytics:analytics:6.0.1",
-
-            "OkGo"                     : "com.lzy.net:okgo:3.0.4",
-            "Okrx"                     : "com.lzy.net:okrx2:2.0.2",
-            "okserver"                 : "com.lzy.net:okserver:2.0.5",
-            "DialogUtils"              : "com.github.hss01248:DialogUtil:1.1.6",
-            "loadinglayout"            : "com.lai.weavey:loadinglayout:1.3.1",
-            "flycoTabLayout"           : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
-
-            "SmartRefreshLayout"       : 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3',
-            "SmartRefreshHeader"       : 'com.scwang.smartrefresh:SmartRefreshHeader:1.0.3',
-            //不知道是什么
-            "calligraphy"              : 'uk.co.chrisjenx:calligraphy:2.2.0',
-            //广告页，也可用作介绍页
-            "bga-banner"               : 'cn.bingoogolapple:bga-banner:2.1.7@aar',
-            //跑马灯,懒得撸
-            "marqueeview"              : 'com.sunfusheng:marqueeview:1.2.0',
-            //通用控件
-            "pluginwidget"             : 'com.lyb.besttimer:pluginwidget:0.0.121',
-    ]
-}
 android {
-    compileSdkVersion this.ext.android["compileSdkVersion"]
-    buildToolsVersion this.ext.android["buildToolsVersion"]
-    useLibrary 'org.apache.http.legacy'
+    compileSdkVersion  rootProject.ext.android["compileSdkVersion"]
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        minSdkVersion this.ext.android["minSdkVersion"]
-        targetSdkVersion this.ext.android["targetSdkVersion"]
-        versionCode this.ext.android["versionCode"]
-        versionName this.ext.android["versionName"]
+        minSdkVersion  rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion  rootProject.ext.android["targetSdkVersion"]
+        versionCode  rootProject.ext.android["versionCode"]
+        versionName  rootProject.ext.android["versionName"]
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -142,12 +26,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-}
-lintOptions {
-    checkReleaseBuilds false
-    // Or, if you prefer, you can continue to check for errors in release builds,
-    // but continue the build even when errors are found:
-    abortOnError false
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 buildscript {
@@ -156,76 +40,165 @@ buildscript {
     }
 }
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')    //通用控件库
-    compile ('com.lyb.besttimer:pluginwidget:0.0.122'){
-        exclude module: 'recyclerview-v7'
-    }
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     //support
-    compile(this.ext.dependencies["support-v4"]) {
+    implementation( rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
-    compile(this.ext.dependencies["appcompat-v7"]) {
+    implementation( rootProject.ext.dependencies["appcompat-v7"]) {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    compile(this.ext.dependencies["design"]) {
+    implementation( rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
     }
-    compile this.ext.dependencies["annotations"]
-    testCompile this.ext.dependencies["junit"]
+    implementation  rootProject.ext.dependencies["annotations"]
+    testImplementation  rootProject.ext.dependencies["junit"]
     //test
-    compile this.ext.dependencies["timber"]
-    compile 'com.orhanobut:logger:1.15'
-    compile this.ext.dependencies["constraintlayout"]
-    compile this.ext.dependencies["FlycoTabLayout"]
-    compile this.ext.dependencies["androideventbus"]
-    compile this.ext.dependencies["gson"]
-    compile this.ext.dependencies["glide"]
-    compile(this.ext.dependencies["butterknife"]) {
+    implementation  rootProject.ext.dependencies["timber"]
+    implementation  rootProject.ext.dependencies["constraintlayout"]
+    implementation  rootProject.ext.dependencies["FlycoTabLayout"]
+    implementation  rootProject.ext.dependencies["androideventbus"]
+    implementation  rootProject.ext.dependencies["gson"]
+    implementation  rootProject.ext.dependencies["glide"]
+    implementation( rootProject.ext.dependencies["butterknife"]) {
         exclude module: 'support-annotations'
     }
     //请求
-    compile this.ext.dependencies["OkGo"]
-    compile this.ext.dependencies["Okrx"]
-    compile this.ext.dependencies["okserver"]
-    //dialog工具类
-    compile this.ext.dependencies["DialogUtils"]
+    implementation  rootProject.ext.dependencies["OkGo"]
+    implementation  rootProject.ext.dependencies["Okrx"]
+    implementation  rootProject.ext.dependencies["okserver"]
     //错误状态
-    compile this.ext.dependencies["loadinglayout"]
+    implementation  rootProject.ext.dependencies["loadinglayout"]
     //首页tab
-    compile this.ext.dependencies["flycoTabLayout"]
+    implementation  rootProject.ext.dependencies["flycoTabLayout"]
     //下拉刷新
-    compile this.ext.dependencies["SmartRefreshLayout"]
-    compile this.ext.dependencies["SmartRefreshHeader"]
-    compile this.ext.dependencies["calligraphy"]
+    implementation  rootProject.ext.dependencies["SmartRefreshLayout"]
+    implementation  rootProject.ext.dependencies["SmartRefreshHeader"]
+    implementation  rootProject.ext.dependencies["calligraphy"]
     //轮播图
-    compile this.ext.dependencies["bga-banner"]
-    //友盟
-    compile 'com.umeng.analytics:analytics:latest.integration'
-//    compile 'com.tencent.bugly:crashreport:latest.release'
-    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:crashreport_upgrade:1.3.4'
-    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
-    compile 'com.tencent.bugly:nativecrashreport:latest.release'
-    compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    implementation  rootProject.ext.dependencies["bga-banner"]
 
-    compile this.ext.dependencies["marqueeview"]
+    implementation  rootProject.ext.dependencies["marqueeview"]
 
     //通用控件
-    compile this.ext.dependencies["pluginwidget"]
+    implementation  rootProject.ext.dependencies["pluginwidget"]
     //multidexmultidex
-    compile this.ext.dependencies['multidex']
-    compile 'com.android.support:cardview-v7:25.3.1'
-    compile 'com.github.ybq:Android-SpinKit:1.1.0'
-    compile('cn.qqtheme.framework:WheelPicker:1.5.1') {
+    implementation  rootProject.ext.dependencies['multidex']
+    //兼容动画库
+    implementation  rootProject.ext.dependencies["nineoldandroids"]
+    //通用控件库
+    implementation ('com.lyb.besttimer:pluginwidget:0.0.122'){
+        exclude module: 'recyclerview-v7'
+    }
+    //友盟
+    implementation 'com.umeng.analytics:analytics:latest.integration'
+//    implementation 'com.tencent.bugly:crashreport:latest.release'
+    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.3.4'
+    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release'
+    implementation 'com.yqritc:recyclerview-flexibledivider:1.4.0'
+    implementation 'com.orhanobut:logger:1.15'
+    implementation 'com.android.support:cardview-v7:25.3.1'
+    implementation 'com.github.ybq:Android-SpinKit:1.1.0'
+    implementation('cn.qqtheme.framework:WheelPicker:1.5.1') {
         exclude group: 'com.android.support'
     }
-    //兼容动画库
-    compile this.ext.dependencies["nineoldandroids"]
 
-    compile 'com.trello.rxlifecycle2:rxlifecycle:2.2.0' //
-    compile 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.0'
-    compile 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.0' //
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.0.1'
+}
+
+
+// 定义两个链接，下面会用到。
+def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
+def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
+
+group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。
+version = "1.0.1"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+
+install {
+    repositories.mavenInstaller {
+        // 生成pom.xml和参数
+        pom {
+            project {
+                packaging 'aar'
+                // 项目描述，复制我的话，这里需要修改。
+                name 'baselibrary'// 可选，项目名称。
+                description 'base library for HTJY Android Project'// 可选，项目描述。
+                url siteUrl // 项目主页，这里是引用上面定义好。
+
+                // 软件开源协议，现在一般都是Apache License2.0吧，复制我的，这里不需要修改。
+                licenses {
+                    license {
+                        name 'The Apache Software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                //填写开发者基本信息，复制我的，这里需要修改。
+                developers {
+                    developer {
+                        id 'htjywl' // 开发者的id。
+                        name 'htjywl' // 开发者名字。
+                        email 'htjywl@163.com' // 开发者邮箱。
+                    }
+                }
+
+                // SCM，复制我的，这里不需要修改。
+                scm {
+                    connection gitUrl // Git仓库地址。
+                    developerConnection gitUrl // Git仓库地址。
+                    url siteUrl // 项目主页。
+                }
+            }
+        }
+    }
+}
+
+// 生成jar包的task，不需要修改。
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+// 生成jarDoc的task，不需要修改。
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+    // destinationDir = file("../javadoc/")
+    failOnError false // 忽略注释语法错误，如果用jdk1.8你的注释写的不规范就编译不过。
+}
+
+// 生成javaDoc的jar，不需要修改。
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+// 这里是读取Bintray相关的信息，我们上传项目到github上的时候会把gradle文件传上去，所以不要把帐号密码的信息直接写在这里，写在local.properties中，这里动态读取。
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user") // Bintray的用户名。
+    key = properties.getProperty("bintray.apikey") // Bintray刚才保存的ApiKey。
+
+    configurations = ['archives']
+    pkg {
+        repo = "baselibrary"  //Repository名字 需要自己在bintray网站上先添加
+        name = "baselib"// 发布到Bintray上的项目名字，这里的名字不是compile 'com.ansen.library:circleimage:1.0.1'中的circleimage。
+        userOrg = 'devindeng'//Bintray的组织id
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true // 是否是公开项目。
+    }
 }
