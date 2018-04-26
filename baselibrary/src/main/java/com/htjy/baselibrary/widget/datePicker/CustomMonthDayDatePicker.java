@@ -332,7 +332,7 @@ public class CustomMonthDayDatePicker extends LinearLayout {
      * @param adapter
      */
     public void setTextColor(AbstractWheelTextAdapter adapter) {
-        adapter.setTextColor(context.getResources().getColor(R.color.colorPrimary));
+        adapter.setTextColor(context.getResources().getColor(R.color.tc_47aefe));
     }
 
     public void setTextSize(AbstractWheelTextAdapter adapter) {

@@ -143,7 +143,7 @@ public class CustomDateWeekPicker extends LinearLayout {
      * @param adapter
      */
     public void setTextColor(AbstractWheelTextAdapter adapter) {
-        adapter.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        adapter.setTextColor(ContextCompat.getColor(context, R.color.tc_47aefe));
     }
 
 

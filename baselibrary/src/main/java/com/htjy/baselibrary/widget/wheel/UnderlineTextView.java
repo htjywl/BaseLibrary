@@ -25,7 +25,7 @@ public class UnderlineTextView extends AppCompatTextView {
     //下划线高度
     private int underlineHeight = 4;
     //下划线颜色
-    private int underLineColor = ContextCompat.getColor(getContext(), R.color.colorPrimary);
+    private int underLineColor = ContextCompat.getColor(getContext(), R.color.tc_47aefe);
     private boolean mShowLine;
 
     //通过new创建实例是调用这个构造函数
@@ -40,7 +40,7 @@ public class UnderlineTextView extends AppCompatTextView {
 
         TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.UnderlineTextView);
         //获取具体属性值
-        underLineColor = typedArray.getColor(R.styleable.UnderlineTextView_underline_color,ContextCompat.getColor(getContext(), R.color.colorPrimary));
+        underLineColor = typedArray.getColor(R.styleable.UnderlineTextView_underline_color,ContextCompat.getColor(getContext(), R.color.tc_47aefe));
         underlineHeight = (int)typedArray.getDimension(R.styleable.UnderlineTextView_underline_height,
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 2, getResources().getDisplayMetrics()));
     }

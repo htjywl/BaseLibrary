@@ -243,7 +243,7 @@ public class ZSideBar extends View {
             paint.setAntiAlias(true);
             paint.setTextSize(dp12);
             paint.setTypeface(Typeface.DEFAULT);
-            int colorId = i == choose ? R.color.colorPrimary : R.color.tc_aaaaaa;
+            int colorId = i == choose ? R.color.tc_47aefe : R.color.tc_aaaaaa;
             paint.setColor(ContextCompat.getColor(getContext(), colorId));
 
             float xPos = width / 2 - paint.measureText(indexMap.get(indexMap.keyAt(i))) / 2;
