@@ -1,5 +1,5 @@
 /*
- * Copyright 2016 jeasonlzy(廖子尧)
+ * Copyright 2016 jeasonlzy(???)
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -31,11 +31,11 @@ import io.reactivex.Observable;
 
 /**
  * ================================================
- * 作    者：jeasonlzy（廖子尧）Github地址：https://github.com/jeasonlzy
- * 版    本：1.0
- * 创建日期：2017/5/28
- * 描    述：
- * 修订历史：
+ * ?    ??jeasonlzy?????Github???https://github.com/jeasonlzy
+ * ?    ??1.0
+ * ?????2017/5/28
+ * ?    ??
+ * ?????
  * ================================================
  */
 public class RxUtils {
@@ -67,9 +67,9 @@ public class RxUtils {
     }
 
     /**
-     * 这个封装其实没有必要，只是有些人喜欢这么干，我就多此一举写出来了。。
-     * 这个封装其实没有必要，只是有些人喜欢这么干，我就多此一举写出来了。。
-     * 这个封装其实没有必要，只是有些人喜欢这么干，我就多此一举写出来了。。
+     * ??????????????????????????????????
+     * ??????????????????????????????????
+     * ??????????????????????????????????
      */
     public static <T> Observable<T> request(HttpMethod method, String url, Type type, Class<T> clazz, HttpParams params, HttpHeaders headers) {
         Request<T, ? extends Request> request;
@@ -104,14 +104,14 @@ public class RxUtils {
 
 
     /**
-     * 设置seesionId
+     * ??seesionId
      */
     private static void setSessionId() {
-        //一般手动取出cookie的目的只是交给 webview 等等，非必要情况不要自己操作
+        //??????cookie??????? webview ??????????????
         com.lzy.okgo.cookie.store.CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
         List<okhttp3.Cookie> cookies = cookieStore.getAllCookie();
         for (int i = 0; i < cookies.size(); i++) {
-            // 这里是读取Cookie['PHPSESSID']的值存在静态变量中，保证每次都是同一个值
+            // ?????Cookie['PHPSESSID']????????????????????
             //DialogUtils.showLog("sessionid",cookies.get(i).value());
             if ("PHPSESSID".equals(cookies.get(i).name())) {
                 sessionId = cookies.get(i).value();
