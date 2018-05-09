@@ -23,7 +23,10 @@ public interface BaseImageLoaderStrategy {
     //这里的context指定为ApplicationContext
     void loadImageWithAppCxt(String url, ImageView imageView);
 
+    void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px);
+
     void loadImage(String url, int placeholder, ImageView imageView);
+
     void loadImageWithListener(String url, int placeholder, ImageView imageView, ImageLoadListener listener);
 
     void loadImage(Context context, String url, int placeholder, ImageView imageView);

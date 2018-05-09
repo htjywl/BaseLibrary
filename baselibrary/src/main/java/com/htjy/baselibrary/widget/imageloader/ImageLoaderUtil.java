@@ -58,7 +58,7 @@ public class ImageLoaderUtil {
     }
 
     public void loadImageWithListener(String url, int placeholder, ImageView imageView, ImageLoadListener listener) {
-        mStrategy.loadImageWithListener(url, placeholder, imageView,listener);
+        mStrategy.loadImageWithListener(url, placeholder, imageView, listener);
     }
 
 //    public void loadGifImage(String url, int placeholder, ImageView imageView) {
@@ -109,10 +109,13 @@ public class ImageLoaderUtil {
         mStrategy.loadCornerImage(url, placeholder, imageView, dp);
     }
 
-    public void loadCornerImgWithListener(String url, ImageView imageView, int placeholder, int dp,ImageLoadListener listener) {
-        mStrategy.loadCornerImage(url, placeholder, imageView, dp,listener);
+    public void loadCornerImgWithListener(String url, ImageView imageView, int placeholder, int dp, ImageLoadListener listener) {
+        mStrategy.loadCornerImage(url, placeholder, imageView, dp, listener);
     }
 
+    public void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px) {
+        mStrategy.loadCenterCropWithCorner(context, model, imageView, corner_px);
+    }
 
     /**
      * 策略模式的注入操作
