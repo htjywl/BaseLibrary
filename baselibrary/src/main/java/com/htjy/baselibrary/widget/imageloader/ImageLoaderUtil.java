@@ -71,6 +71,10 @@ public class ImageLoaderUtil {
 
     public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView) {
         mStrategy.loadCircleImage(bitmap, placeholder, imageView);
+    } public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView,ImageLoadListener listener) {
+        mStrategy.loadCircleImage(bitmap, placeholder, imageView,listener);
+    }public void loadCircleImage(String url, int placeholder, ImageView imageView,ImageLoadListener listener) {
+        mStrategy.loadCircleImage(url, placeholder, imageView,listener);
     }
 
     public void loadCircleBorderImage(String url, int placeholder, ImageView imageView, float borderWidth, int borderColor) {

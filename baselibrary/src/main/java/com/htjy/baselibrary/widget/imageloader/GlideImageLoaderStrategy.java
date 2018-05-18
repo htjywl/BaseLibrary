@@ -66,9 +66,12 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     public void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px) {
         RequestOptions requestOptions = RequestOptions.bitmapTransform(new MultiTransformation<>(
                 new CenterCrop(), new RoundedCorners(corner_px)));
+
         requestOptions.placeholder(android.R.color.transparent);
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
         requestOptions.dontAnimate();
+
+
         Glide.with(context)
                 .load(model)
                 .apply(requestOptions)
@@ -122,6 +125,64 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .transform(new GlideCircleTransform(imageView.getContext()))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .into(imageView);
+    }
+
+    @Override
+    public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView, ImageLoadListener listener) {
+        RequestOptions options = new RequestOptions();
+        options.placeholder(placeholder);
+        options.diskCacheStrategy(DiskCacheStrategy.ALL);
+        options.dontAnimate();
+        options.transform(new GlideCircleTransform(imageView.getContext()));
+        Glide.with(imageView.getContext()).load(bitmap)
+//                .placeholder(placeholder)
+//                .dontAnimate()
+//                .transform(new GlideCircleTransform(imageView.getContext()))
+//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(options)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        listener.onLoadError(e, model, target, isFirstResource);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        listener.onLoadReady(resource, model, target, dataSource, isFirstResource);
+                        return false;
+                    }
+                })
+                .into(imageView);
+    }
+
+    @Override
+    public void loadCircleImage(String url, int placeholder, ImageView imageView, ImageLoadListener listener) {
+        RequestOptions options = new RequestOptions();
+        options.placeholder(placeholder);
+        options.diskCacheStrategy(DiskCacheStrategy.ALL);
+        options.dontAnimate();
+        options.transform(new GlideCircleTransform(imageView.getContext()));
+        Glide.with(imageView.getContext()).load(url)
+//                .placeholder(placeholder)
+//                .dontAnimate()
+//                .transform(new GlideCircleTransform(imageView.getContext()))
+//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .apply(options)
+                .listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        listener.onLoadError(e, model, target, isFirstResource);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        listener.onLoadReady(resource, model, target, dataSource, isFirstResource);
+                        return false;
+                    }
+                })
                 .into(imageView);
     }
 

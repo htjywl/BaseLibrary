@@ -4,7 +4,6 @@ package com.htjy.baselibrary.utils;
 import com.htjy.baselibrary.utils.constant.TimeConstants;
 
 import java.text.DateFormat;
-import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -196,6 +195,8 @@ public final class TimeUtils {
     public static final DateFormat TIME_FORMAT_7 = new SimpleDateFormat("yyyy年MM月", Locale.getDefault());
     public static final DateFormat TIME_FORMAT_8 = new SimpleDateFormat("yyyy年MM月dd日", Locale.getDefault());
     public static final DateFormat TIME_FORMAT_9 = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    public static final DateFormat TIME_FORMAT_10 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
+    public static final DateFormat TIME_FORMAT_11 = new SimpleDateFormat("M月d日", Locale.getDefault());
 
     private TimeUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");

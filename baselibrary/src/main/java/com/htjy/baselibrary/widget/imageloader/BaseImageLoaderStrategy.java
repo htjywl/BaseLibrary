@@ -34,7 +34,8 @@ public interface BaseImageLoaderStrategy {
     void loadCircleImage(String url, int placeholder, ImageView imageView);
 
     void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView);
-
+    void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView,ImageLoadListener listener);
+     void loadCircleImage(String url, int placeholder, ImageView imageView, ImageLoadListener listener);
     void loadCircleBorderImage(String url, int placeholder, ImageView imageView, float borderWidth, int borderColor);
 
     void loadCircleBorderImage(String url, int placeholder, ImageView imageView, float borderWidth, int borderColor, int heightPx, int widthPx);
