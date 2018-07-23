@@ -12,7 +12,6 @@ import org.json.JSONObject;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.net.SocketTimeoutException;
 import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -113,6 +112,11 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
     public void afterConvertSuccess(T t) {
     }
 
+
+
+    protected boolean showErrorFromServer() {
+        return false;
+    }
     /**
      * 转码http的网址，只对中文进行转码
      *
@@ -133,7 +137,7 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
         return b.toString();
     }
 
-    //看自己要不要全局处理,不处理的话,就具体请求再处理
+    /*//看自己要不要全局处理,不处理的话,就具体请求再处理
     @Override
     public void onError(com.lzy.okgo.model.Response<T> response) {
         super.onError(response);
@@ -145,6 +149,39 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
             ToastUtils.showShortToast(BaseException.NETWORD_TIMEOUT_MESSAGE);
         } else {
             ToastUtils.showShortToast(BaseException.NETWORD_ERROR_MESSAGE);
+        }
+    }*/
+
+    protected boolean showSuccessFromServer() {
+        return false;
+    }
+
+    //看自己要不要全局处理,不处理的话,就具体请求再处理
+    @Override
+    public void onError(com.lzy.okgo.model.Response<T> response) {
+        super.onError(response);
+        Throwable exception = response.getException();
+        if (exception instanceof BaseException) {
+            if (showErrorFromServer()) {
+                ToastUtils.showShortToast(((BaseException) exception).getDisplayMessage());
+            }
+        } else if (exception instanceof JSONException){
+            ToastUtils.showShortToast(BaseException.JSON_ERROR_MESSAGE);
+        }
+        else{
+            ToastUtils.showShortToast(BaseException.NETWORD_ERROR_MESSAGE);
+        }
+    }
+
+    @Override
+    public void onSuccess(com.lzy.okgo.model.Response<T> response) {
+        if (showSuccessFromServer()) {
+            T body = response.body();
+            if (showSuccessFromServer()) {
+                if (body instanceof BaseBean) {
+                    ToastUtils.showShortToast(((BaseBean) body).getMessage());
+                }
+            }
         }
     }
 }
