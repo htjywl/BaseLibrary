@@ -106,12 +106,12 @@ public abstract class AbstractWheelView extends AbstractWheel {
     protected Paint mSeparatorsPaint;
 
     /**
-     * {@link com.nineoldandroids.animation.Animator} for dimming the selector spinnerwheel.
+     * for dimming the selector spinnerwheel.
      */
     protected Animator mDimSelectorWheelAnimator;
 
     /**
-     * {@link com.nineoldandroids.animation.Animator} for dimming the selector spinnerwheel.
+     * for dimming the selector spinnerwheel.
      */
     protected Animator mDimSeparatorsAnimator;
 

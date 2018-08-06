@@ -10,10 +10,10 @@ public class MyGridView extends GridView {
     private OnTouchInvalidPositionListener mTouchInvalidPosListener;
 
     /**
-     * 自定义gridView用于嵌套在scrollview里面<br/>
-     * 在scrollview里面需要设置一下代码,让scrollview置顶;<br/>
-     * sv = (ScrollView) findViewById(R.id.act_solution_4_sv);<br/>
-     * sv.smoothScrollTo(0, 0);<br/>
+     * 自定义gridView用于嵌套在scrollview里面
+     * 在scrollview里面需要设置一下代码,让scrollview置顶;
+     * sv = (ScrollView) findViewById(R.id.act_solution_4_sv);
+     * sv.smoothScrollTo(0, 0);
      *
      * @param context
      */

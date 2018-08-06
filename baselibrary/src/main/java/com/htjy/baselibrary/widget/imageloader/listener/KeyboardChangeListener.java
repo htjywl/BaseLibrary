@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 
 /**
- * simple and powerful Keyboard show/hidden listener,view {@android.R.id.content} and {@ViewTreeObserver.OnGlobalLayoutListener}
+ * simple and powerful Keyboard show/hidden listener,view
  * Created by yes.cpu@gmail.com 2016/7/13.
  */
 public class KeyboardChangeListener implements ViewTreeObserver.OnGlobalLayoutListener {

@@ -5,16 +5,16 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion  rootProject.ext.android["compileSdkVersion"]
+    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        minSdkVersion  rootProject.ext.android["minSdkVersion"]
-        targetSdkVersion  rootProject.ext.android["targetSdkVersion"]
-        versionCode  rootProject.ext.android["versionCode"]
-        versionName  rootProject.ext.android["versionName"]
+        minSdkVersion rootProject.ext.android["minSdkVersion"]
+        targetSdkVersion rootProject.ext.android["targetSdkVersion"]
+        versionCode rootProject.ext.android["versionCode"]
+        versionName rootProject.ext.android["versionName"]
         ndk {
             // 设置支持的SO库架构
             abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -42,62 +42,62 @@ buildscript {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     //support
-    compile( rootProject.ext.dependencies["support-v4"]) {
+    compile(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
     }
-    compile( rootProject.ext.dependencies["appcompat-v7"]) {
+    compile(rootProject.ext.dependencies["appcompat-v7"]) {
         exclude module: 'support-annotations'
         exclude module: 'support-v4'
     }
-    compile( rootProject.ext.dependencies["design"]) {
+    compile(rootProject.ext.dependencies["design"]) {
         exclude module: 'support-annotations'
         exclude module: 'appcompat-v7'
         exclude module: 'support-v4'
     }
-    compile  rootProject.ext.dependencies["annotations"]
-    testCompile  rootProject.ext.dependencies["junit"]
+    compile rootProject.ext.dependencies["annotations"]
+    testCompile rootProject.ext.dependencies["junit"]
     //test
-    compile  rootProject.ext.dependencies["timber"]
-    compile  rootProject.ext.dependencies["constraintlayout"]
-    compile  rootProject.ext.dependencies["androideventbus"]
-    compile  rootProject.ext.dependencies["gson"]
-    compile  rootProject.ext.dependencies["glide"]
-    compile( rootProject.ext.dependencies["butterknife"]) {
+    compile rootProject.ext.dependencies["timber"]
+    compile rootProject.ext.dependencies["constraintlayout"]
+    compile rootProject.ext.dependencies["androideventbus"]
+    compile rootProject.ext.dependencies["gson"]
+    compile rootProject.ext.dependencies["glide"]
+    compile(rootProject.ext.dependencies["butterknife"]) {
         exclude module: 'support-annotations'
     }
     //请求
-    compile  rootProject.ext.dependencies["OkGo"]
-    compile  rootProject.ext.dependencies["Okrx"]
+    compile rootProject.ext.dependencies["OkGo"]
+    compile rootProject.ext.dependencies["Okrx"]
     //implementation  rootProject.ext.dependencies["okserver"]
     //错误状态
-    compile  rootProject.ext.dependencies["loadinglayout"]
+    compile rootProject.ext.dependencies["loadinglayout"]
     //首页tab
-    compile  rootProject.ext.dependencies["flycoTabLayout"]
+    compile rootProject.ext.dependencies["flycoTabLayout"]
     //下拉刷新
-    compile  rootProject.ext.dependencies["SmartRefreshLayout"]
-    compile  rootProject.ext.dependencies["SmartRefreshHeader"]
-    compile  rootProject.ext.dependencies["calligraphy"]
+    compile rootProject.ext.dependencies["SmartRefreshLayout"]
+    compile rootProject.ext.dependencies["SmartRefreshHeader"]
+    compile rootProject.ext.dependencies["calligraphy"]
     //轮播图
-    compile  rootProject.ext.dependencies["bga-banner"]
+    compile rootProject.ext.dependencies["bga-banner"]
 
-    compile  rootProject.ext.dependencies["marqueeview"]
+    compile rootProject.ext.dependencies["marqueeview"]
 
     //通用控件
-  //  api  rootProject.ext.dependencies["pluginwidget"]
+    //  api  rootProject.ext.dependencies["pluginwidget"]
     //multidexmultidex
-    compile  rootProject.ext.dependencies['multidex']
+    compile rootProject.ext.dependencies['multidex']
     //兼容动画库
-    compile  rootProject.ext.dependencies["nineoldandroids"]
+    compile rootProject.ext.dependencies["nineoldandroids"]
     //通用控件库
-    compile ('com.lyb.besttimer:pluginwidget:0.0.123'){
+    compile('com.lyb.besttimer:pluginwidget:0.0.123') {
         exclude module: 'recyclerview-v7'
     }
-   /* //友盟
-    compile 'com.umeng.analytics:analytics:latest.integration'
-//    compile 'com.tencent.bugly:crashreport:latest.release'
-    //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
-    compile 'com.tencent.bugly:crashreport_upgrade:1.3.4'
-    //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0*/
+    /* //友盟
+     compile 'com.umeng.analytics:analytics:latest.integration'
+ //    compile 'com.tencent.bugly:crashreport:latest.release'
+     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+     compile 'com.tencent.bugly:crashreport_upgrade:1.3.4'
+     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0*/
     //compile 'com.tencent.bugly:nativecrashreport:latest.release'
     compile 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     compile 'com.orhanobut:logger:1.15'
@@ -115,13 +115,12 @@ dependencies {
     compile 'top.zibin:Luban:1.1.3'
 }
 
-
 // 定义两个链接，下面会用到。
 def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
 
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。
-version = "1.1.5"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "1.1.6"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {
@@ -170,6 +169,7 @@ task sourcesJar(type: Jar) {
 
 // 生成jarDoc的task，不需要修改。
 task javadoc(type: Javadoc) {
+    options.encoding = "utf-8"
     source = android.sourceSets.main.java.srcDirs
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     // destinationDir = file("../javadoc/")
@@ -196,7 +196,8 @@ bintray {
     configurations = ['archives']
     pkg {
         repo = "baselibrary"  //Repository名字 需要自己在bintray网站上先添加
-        name = "baselib"// 发布到Bintray上的项目名字，这里的名字不是compile 'com.ansen.library:circleimage:1.0.1'中的circleimage。
+        name = "baselib"
+// 发布到Bintray上的项目名字，这里的名字不是compile 'com.ansen.library:circleimage:1.0.1'中的circleimage。
         userOrg = 'devindeng'//Bintray的组织id
         websiteUrl = siteUrl
         vcsUrl = gitUrl
