@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion rootProject.ext.android["compileSdkVersion"]
+    compileSdkVersion  rootProject.ext.android["compileSdkVersion"]
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -70,9 +70,9 @@ dependencies {
     compile rootProject.ext.dependencies["Okrx"]
     //implementation  rootProject.ext.dependencies["okserver"]
     //错误状态
-    compile rootProject.ext.dependencies["loadinglayout"]
-    //首页tab
-    compile rootProject.ext.dependencies["flycoTabLayout"]
+    compile  rootProject.ext.dependencies["loadinglayout"]
+   /* //首页tab
+    compile  rootProject.ext.dependencies["flycoTabLayout"]*/
     //下拉刷新
     compile rootProject.ext.dependencies["SmartRefreshLayout"]
     compile rootProject.ext.dependencies["SmartRefreshHeader"]
@@ -118,9 +118,9 @@ dependencies {
 // 定义两个链接，下面会用到。
 def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
-
+//gradlew clean bintrayUpload
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。
-version = "1.1.6"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "1.1.8"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {
