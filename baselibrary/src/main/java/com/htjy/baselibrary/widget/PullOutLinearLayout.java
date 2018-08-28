@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.htjy.baselibrary.R;
@@ -32,36 +33,33 @@ public class PullOutLinearLayout extends LinearLayout {
     public PullOutLinearLayout(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setOrientation(LinearLayout.VERTICAL);
+        getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            @Override
+            public boolean onPreDraw() {
+                getViewTreeObserver().removeOnPreDrawListener(this);
+                showHeader(false);
+                return true;
+            }
+        });
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        if (!showHeader) {
-            View headerView = null;
-            for (int index = 0; index < getChildCount(); index++) {
-                View view = getChildAt(index);
-                LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
-                if (layoutParams.header) {
-                    headerView = view;
-                    break;
-                }
-            }
-            if (headerView != null && getPaddingTop() != -headerView.getMeasuredHeight()) {
-                setPadding(0, -headerView.getMeasuredHeight(), 0, 0);
+    private ValueAnimator valueAnimator;
+
+    public void showHeader(boolean showHeader) {
+        if (valueAnimator != null && valueAnimator.isRunning()) {
+            return;
+        }
+        View headerView = null;
+        for (int index = 0; index < getChildCount(); index++) {
+            View view = getChildAt(index);
+            LayoutParams layoutParams = (LayoutParams) view.getLayoutParams();
+            if (layoutParams.header) {
+                headerView = view;
+                break;
             }
         }
-    }
-
-    private boolean showHeader = false;
-
-    /**
-     * 别闹，第一次才有效
-     */
-    private void showHeader() {
-        if (!showHeader) {
-            showHeader = true;
-            ValueAnimator valueAnimator = ValueAnimator.ofInt(getPaddingTop(), 0);
+        if (headerView != null && ((showHeader && getPaddingTop() != 0) || (!showHeader && getPaddingTop() != -headerView.getMeasuredHeight()))) {
+            valueAnimator = ValueAnimator.ofInt(getPaddingTop(), showHeader ? 0 : -headerView.getMeasuredHeight());
             valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
                 @Override
                 public void onAnimationUpdate(ValueAnimator animation) {
@@ -73,22 +71,22 @@ public class PullOutLinearLayout extends LinearLayout {
     }
 
     private float lastY;
-    private boolean hasIntoMove = false;
+    private static final float distance = 10;
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                hasIntoMove = false;
+                lastY = ev.getY();
                 break;
             case MotionEvent.ACTION_MOVE:
-                if (hasIntoMove) {
-                    if (ev.getY() > lastY) {
-                        showHeader();
-                    }
+                if (ev.getY() > lastY + distance) {
+                    showHeader(true);
+                    lastY = ev.getY();
+                } else if (ev.getY() < lastY - distance) {
+                    showHeader(false);
+                    lastY = ev.getY();
                 }
-                hasIntoMove = true;
-                lastY = ev.getY();
                 break;
         }
         return super.dispatchTouchEvent(ev);

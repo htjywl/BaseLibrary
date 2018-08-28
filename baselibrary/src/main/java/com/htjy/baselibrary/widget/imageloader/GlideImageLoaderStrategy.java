@@ -221,12 +221,11 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     @Override
     public void loadCornerImage(Bitmap bitmap, int placeholder, ImageView imageView, int dp) {
         byte[] bytes = new byte[0];
-        if (bitmap != null){
+        if (bitmap != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-           bytes = baos.toByteArray();
+            bytes = baos.toByteArray();
         }
-
 
 
         RequestOptions options = new RequestOptions();
@@ -590,23 +589,24 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
                 return false;
             }
         };
-        Glide.with(ctx).load(url)
-//                .placeholder(placeholder)
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-//                .listener(new RequestListener<String, GlideDrawable>() {
-//            @Override
-//            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-//                return false;
-//            }
+        if (ctx != null)
+            Glide.with(ctx).load(url)
+//                    .placeholder(placeholder)
+//                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+//                    .listener(new RequestListener<String, GlideDrawable>() {
+//                        @Override
+//                        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+//                            return false;
+//                        }
 //
-//            @Override
-//            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-//                return false;
-//            }
-//        })
-                .apply(options)
-                .listener(listener)
-                .into(imageView);
+//                        @Override
+//                        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+//                            return false;
+//                        }
+//                    })
+                    .apply(options)
+                    .listener(listener)
+                    .into(imageView);
     }
 
 //    /**

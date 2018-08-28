@@ -1,11 +1,13 @@
 package com.htjy.baselibrary.utils;
 
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.v4.content.FileProvider;
 
 import java.io.File;
@@ -229,6 +231,17 @@ public final class IntentUtils {
         return intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_ACTIVITY_NEW_TASK);
     }
 
+
+    /**
+     * 获取应用详情的意图
+     *
+     */
+    public static Intent getAppDetail(Context context) {
+        Intent intent = new Intent();
+        intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+        intent.setData(Uri.fromParts("package", context.getPackageName(), null));
+        return intent.addFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
+    }
 //    /**
 //     * 获取选择照片的Intent
 //     *

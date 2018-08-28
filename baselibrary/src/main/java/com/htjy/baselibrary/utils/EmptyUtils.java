@@ -1,6 +1,7 @@
 package com.htjy.baselibrary.utils;
 
 import android.os.Build;
+import android.text.TextUtils;
 import android.util.SparseArray;
 import android.util.SparseBooleanArray;
 import android.util.SparseIntArray;
@@ -35,6 +36,9 @@ public final class EmptyUtils {
             return true;
         }
         if (obj instanceof String && obj.toString().length() == 0) {
+            return true;
+        }
+        if (obj instanceof CharSequence && TextUtils.isEmpty((CharSequence) obj)) {
             return true;
         }
         if (obj.getClass().isArray() && Array.getLength(obj) == 0) {

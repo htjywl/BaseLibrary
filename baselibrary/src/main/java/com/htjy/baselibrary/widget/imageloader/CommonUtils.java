@@ -4,7 +4,8 @@ package com.htjy.baselibrary.widget.imageloader;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
-import android.text.TextUtils;
+
+import com.htjy.baselibrary.utils.EmptyUtils;
 
 import java.io.File;
 import java.math.BigDecimal;
@@ -74,7 +75,7 @@ public class CommonUtils {
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(pathName, options);
         String type = options.outMimeType;
-        if (!TextUtils.isEmpty(type)) {
+        if (EmptyUtils.isNotEmpty(type)) {
             try {
                 type = type.substring(6, type.length());
                 if ("gif".equals(type)) {

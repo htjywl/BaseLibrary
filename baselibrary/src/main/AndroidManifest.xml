@@ -13,6 +13,11 @@
             android:name="com.htjy.baselibrary.widget.imageloader.MyGlideModule"
             android:value="GlideModule" />-->
         <!-- 自定义GlideModule -->
+        <receiver android:name=".receiver.AlarmReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.AlarmReceiver"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

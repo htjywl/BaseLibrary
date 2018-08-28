@@ -48,7 +48,11 @@ public final class SPUtils {
     }
 
     private SPUtils(final String spName) {
-        sp = Utils.getContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
+        try {
+            sp = Utils.getContext().getSharedPreferences(spName, Context.MODE_PRIVATE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -58,6 +62,9 @@ public final class SPUtils {
      * @param value 值
      */
     public void put(@NonNull final String key, @NonNull final String value) {
+        if (sp == null) {
+            return;
+        }
         sp.edit().putString(key, value).apply();
     }
 
@@ -79,6 +86,9 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public String getString(@NonNull final String key, @NonNull final String defaultValue) {
+        if (sp == null) {
+            return "";
+        }
         return sp.getString(key, defaultValue);
     }
 
@@ -89,6 +99,9 @@ public final class SPUtils {
      * @param value 值
      */
     public void put(@NonNull final String key, final int value) {
+        if (sp == null) {
+            return;
+        }
         sp.edit().putInt(key, value).apply();
     }
 
@@ -110,6 +123,9 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public int getInt(@NonNull final String key, final int defaultValue) {
+        if (sp == null) {
+            return -1;
+        }
         return sp.getInt(key, defaultValue);
     }
 
@@ -141,6 +157,9 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public long getLong(@NonNull final String key, final long defaultValue) {
+        if (sp == null) {
+            return -1L;
+        }
         return sp.getLong(key, defaultValue);
     }
 
@@ -151,6 +170,9 @@ public final class SPUtils {
      * @param value 值
      */
     public void put(@NonNull final String key, final float value) {
+        if (sp == null) {
+            return;
+        }
         sp.edit().putFloat(key, value).apply();
     }
 
@@ -172,6 +194,9 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public float getFloat(@NonNull final String key, final float defaultValue) {
+        if (sp == null) {
+            return -1f;
+        }
         return sp.getFloat(key, defaultValue);
     }
 
@@ -182,6 +207,9 @@ public final class SPUtils {
      * @param value 值
      */
     public void put(@NonNull final String key, final boolean value) {
+        if (sp == null) {
+            return;
+        }
         sp.edit().putBoolean(key, value).apply();
     }
 
@@ -203,6 +231,9 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public boolean getBoolean(@NonNull final String key, final boolean defaultValue) {
+        if (sp == null) {
+            return false;
+        }
         return sp.getBoolean(key, defaultValue);
     }
 
@@ -213,6 +244,9 @@ public final class SPUtils {
      * @param values 值
      */
     public void put(@NonNull final String key, @NonNull final Set<String> values) {
+        if (sp == null) {
+            return;
+        }
         sp.edit().putStringSet(key, values).apply();
     }
 
@@ -223,6 +257,9 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值{@code Collections.<String>emptySet()}
      */
     public Set<String> getStringSet(@NonNull final String key) {
+        if (sp == null) {
+            return null;
+        }
         return getStringSet(key, Collections.<String>emptySet());
     }
 
@@ -234,6 +271,9 @@ public final class SPUtils {
      * @return 存在返回对应值，不存在返回默认值{@code defaultValue}
      */
     public Set<String> getStringSet(@NonNull final String key, @NonNull final Set<String> defaultValue) {
+        if (sp == null) {
+            return null;
+        }
         return sp.getStringSet(key, defaultValue);
     }
 
@@ -243,6 +283,9 @@ public final class SPUtils {
      * @return Map对象
      */
     public Map<String, ?> getAll() {
+        if (sp == null) {
+            return null;
+        }
         return sp.getAll();
     }
 
@@ -253,6 +296,9 @@ public final class SPUtils {
      * @return {@code true}: 存在<br>{@code false}: 不存在
      */
     public boolean contains(@NonNull final String key) {
+        if (sp == null) {
+            return false;
+        }
         return sp.contains(key);
     }
 
@@ -262,6 +308,9 @@ public final class SPUtils {
      * @param key 键
      */
     public void remove(@NonNull final String key) {
+        if (sp == null) {
+            return;
+        }
         sp.edit().remove(key).apply();
     }
 
@@ -269,6 +318,9 @@ public final class SPUtils {
      * SP中清除所有数据
      */
     public void clear() {
+        if (sp == null) {
+            return;
+        }
         sp.edit().clear().apply();
     }
 
