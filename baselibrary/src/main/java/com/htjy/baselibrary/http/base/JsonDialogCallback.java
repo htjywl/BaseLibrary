@@ -144,6 +144,7 @@ public abstract class JsonDialogCallback<T> extends JsonCallback<T> {
 
     @Override
     public void onSuccess(Response<T> response) {
+        super.onSuccess(response);
         if (response.getRawCall() == null || !response.getRawCall().isCanceled()) {
             onSimpleSuccess(response);
         }
