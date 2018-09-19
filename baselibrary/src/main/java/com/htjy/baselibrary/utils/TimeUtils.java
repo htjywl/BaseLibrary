@@ -24,8 +24,8 @@ public final class TimeUtils {
     private final static long minute = 60 * 1000;// 1分钟
     private final static long hour = 60 * minute;// 1小时
     private final static long day = 24 * hour;// 1天
+    private final static long week = 7 * day;// 1周
     private final static long month = 31 * day;// 月
-    private final static long year = 12 * month;// 年
 
     /**
      * <p>在工具类中经常使用到工具类的格式化描述，这个主要是一个日期的操作类，所以日志格式主要使用 SimpleDateFormat的定义格式.</p>
@@ -198,6 +198,7 @@ public final class TimeUtils {
     public static final DateFormat TIME_FORMAT_10 = new SimpleDateFormat("HH:mm:ss", Locale.getDefault());
     public static final DateFormat TIME_FORMAT_11 = new SimpleDateFormat("M月d日", Locale.getDefault());
     public static final DateFormat TIME_FORMAT_12 = new SimpleDateFormat("MM-dd", Locale.getDefault());
+    public static final DateFormat TIME_FORMAT_19 = new SimpleDateFormat("EEE", Locale.getDefault());
     public static final DateFormat TIME_FORMAT_20 = new SimpleDateFormat("yyyy年M月d日", Locale.getDefault());
 
 
@@ -785,8 +786,10 @@ public final class TimeUtils {
             return String.format(Locale.getDefault(), "%d天前", span / TimeConstants.DAY);
         }
     }
+
     /**
      * 返回文字描述的日期
+     * 2018-09-18按照掌通校园更新时间格式
      *
      * @param time
      * @return
@@ -794,28 +797,25 @@ public final class TimeUtils {
     public static String getTimeFormatText(long time) {
         long diff = System.currentTimeMillis() - time;
         long r = 0;
-        if (diff > year) {
-            r = (diff / year);
-            return r + "年前";
-        }
-        if (diff > month) {
-            r = (diff / month);
-            return r + "个月前";
-        }
-        if (diff > day) {
-            r = (diff / day);
-            return r + "天前";
-        }
-        if (diff > hour) {
-            r = (diff / hour);
-            return r + "小时前";
-        }
-        if (diff > minute) {
+//        if (diff > year) {
+//            r = (diff / year);
+//            return r + "年前";
+//        }
+        if (diff > week) {
+            return millis2String(time, TIME_FORMAT_8);
+        } else if (diff > 2 * day) {
+            return millis2String(time, TIME_FORMAT_19);
+        } else if (diff > day) {
+            return "昨天";
+        } else if (diff > hour) {
+            return millis2String(time, TIME_FORMAT_5);
+        } else if (diff > minute) {
             r = (diff / minute);
             return r + "分钟前";
         }
         return "刚刚";
     }
+
     private static long getWeeOfToday() {
         Calendar cal = Calendar.getInstance();
         cal.set(Calendar.HOUR_OF_DAY, 0);
@@ -1535,7 +1535,7 @@ public final class TimeUtils {
     private static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("");
 
 
-    public static List<String> getFirstAndLastOfWeek(Date InputDate,DateFormat format){
+    public static List<String> getFirstAndLastOfWeek(Date InputDate, DateFormat format) {
         //Date InputDate = new SimpleDateFormat("yyyyMMdd").parse(String.valueOf(20140101));
         Calendar cDate = Calendar.getInstance();
         cDate.setFirstDayOfWeek(Calendar.MONDAY);
@@ -1576,14 +1576,13 @@ public final class TimeUtils {
     }
 
 
-
     /**
-         * 获取年份中的第几周
-         * <p>注意：国外周日才是新的一周的开始</p>
-         *
-         * @param millis 毫秒时间戳
-         * @return 1...54
-         */
+     * 获取年份中的第几周
+     * <p>注意：国外周日才是新的一周的开始</p>
+     *
+     * @param millis 毫秒时间戳
+     * @return 1...54
+     */
 
     public static int getWeekOfYear(final long millis) {
         return getWeekOfYear(millis2Date(millis));
