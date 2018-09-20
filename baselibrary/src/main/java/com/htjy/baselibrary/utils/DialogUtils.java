@@ -120,7 +120,7 @@ public class DialogUtils {
         return dlg;
     }
 
-    public static class DefaultProgressDialog extends AlertDialog {
+    public static class DefaultProgressDialog extends Dialog {
 
         public DefaultProgressDialog(Context context) {
             super(context);
