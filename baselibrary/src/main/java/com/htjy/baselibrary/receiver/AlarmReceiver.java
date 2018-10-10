@@ -40,7 +40,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         String action = intent.getAction();
         if (TextUtils.equals(action, ACTION_ALARM)) {
             Serializable obj = intent.getSerializableExtra("obj");
-            EventBus.getDefault().post(obj);
+            if (obj != null) {
+                EventBus.getDefault().post(obj);
+            }
         }
     }
 
