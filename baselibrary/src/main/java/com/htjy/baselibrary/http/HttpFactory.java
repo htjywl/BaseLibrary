@@ -1,5 +1,6 @@
 package com.htjy.baselibrary.http;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -58,9 +59,11 @@ public class HttpFactory {
                     return true;
                 }
             };
-            if (!isShow) {
-                isShow = true;
-                DialogUtils.showConfirmDialog(context, "提示", "网络未开启，是否马上设置？", okAction, cancelAction);
+            if (!isShow && context != null ) {
+                if (context instanceof Activity && !((Activity) context).isFinishing()){
+                    isShow = true;
+                    DialogUtils.showConfirmDialog(context, "提示", "网络未开启，是否马上设置？", okAction, cancelAction);
+                }
             }
             return false;
         } else {
