@@ -796,6 +796,8 @@ public final class TimeUtils {
      */
     public static String getTimeFormatText(long time) {
         long diff = System.currentTimeMillis() - time;
+        int weekDiff = getWeekIndex(time) - getWeekIndex(System.currentTimeMillis());
+
         long r = 0;
 //        if (diff > year) {
 //            r = (diff / year);
@@ -804,11 +806,20 @@ public final class TimeUtils {
         if (diff > week) {
             return millis2String(time, TIME_FORMAT_8);
         } else if (diff > 2 * day) {
-            return millis2String(time, TIME_FORMAT_19);
+            if (getWeekOfYear(time) == getWeekOfYear(System.currentTimeMillis()))
+                return millis2String(time, TIME_FORMAT_19);
+            else
+                return millis2String(time, TIME_FORMAT_8);
         } else if (diff > day) {
-            return "昨天";
+            if (weekDiff == 1 || weekDiff == -6)
+                return "昨天";
+            else
+                return millis2String(time, TIME_FORMAT_19);
         } else if (diff > hour) {
-            return millis2String(time, TIME_FORMAT_5);
+            if (isToday(time))
+                return millis2String(time, TIME_FORMAT_5);
+            else
+                return "昨天";
         } else if (diff > minute) {
             r = (diff / minute);
             return r + "分钟前";
