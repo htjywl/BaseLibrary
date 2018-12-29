@@ -17,6 +17,7 @@ import com.bumptech.glide.load.MultiTransformation;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.RequestOptions;
@@ -75,6 +76,15 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         Glide.with(context)
                 .load(model)
                 .apply(requestOptions)
+                .into(imageView);
+    }
+
+
+    @Override
+    public void loadCentercropCircleImage(Object model, int placeholder, ImageView imageView) {
+        RequestOptions options = new RequestOptions().placeholder(placeholder).diskCacheStrategy(DiskCacheStrategy.ALL).transforms(new CenterCrop(), new CircleCrop());
+        Glide.with(imageView.getContext()).load(model)
+                .apply(options)
                 .into(imageView);
     }
 

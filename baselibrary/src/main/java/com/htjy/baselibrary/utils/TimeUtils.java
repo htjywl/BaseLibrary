@@ -787,6 +787,19 @@ public final class TimeUtils {
         }
     }
 
+    public static String getTimeShowFromBBS(long millis) {
+        Calendar todayCalendar = Calendar.getInstance();
+        Calendar currCalendar = Calendar.getInstance();
+        currCalendar.setTimeInMillis(millis);
+        if (isSameDay(todayCalendar.getTime(), currCalendar.getTime())) {
+            return millis2String(millis,TIME_FORMAT_4);
+        } else if (isAfterDay(currCalendar.getTime(),todayCalendar.getTime())){
+            return "昨天";
+        }else {
+            return millis2String(millis,TIME_FORMAT_3);
+        }
+    }
+
     /**
      * 返回文字描述的日期
      * 2018-09-18按照掌通校园更新时间格式
@@ -1757,6 +1770,26 @@ public final class TimeUtils {
         int day2 = calendar.get(Calendar.DAY_OF_YEAR);
 
         if ((year1 == year2) && (day1 == day2)) {
+            return true;
+        }
+        return false;
+    }
+
+    //是否明天
+    public static boolean isAfterDay(Date currDate, Date checkDate) {
+        Calendar currCalendar = Calendar.getInstance();
+        currCalendar.setTime(currDate);
+        int year1 = currCalendar.get(Calendar.YEAR);
+        int day1 = currCalendar.get(Calendar.DAY_OF_YEAR);
+
+        Calendar checkCalendar = Calendar.getInstance();
+        checkCalendar.setTime(checkDate);
+        int year2 = checkCalendar.get(Calendar.YEAR);
+        int day2 = checkCalendar.get(Calendar.DAY_OF_YEAR);
+
+        if ((year1 == year2) && (day1 == day2 - 1)) {
+            return true;
+        } else if ((year1 == year2 - 1) && (day1 == currCalendar.getActualMaximum(Calendar.DAY_OF_YEAR) && day2 == checkCalendar.getActualMinimum(Calendar.DAY_OF_YEAR))) {
             return true;
         }
         return false;

@@ -32,6 +32,8 @@ public interface BaseImageLoaderStrategy {
     void loadImage(Context context, String url, int placeholder, ImageView imageView);
 
     void loadCircleImage(String url, int placeholder, ImageView imageView);
+    void loadCentercropCircleImage(Object model, int placeholder, ImageView imageView);
+
 
     void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView);
     void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView,ImageLoadListener listener);
