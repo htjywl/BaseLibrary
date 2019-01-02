@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.htjy.baselibrary.utils.FragmentUtils;
+import com.htjy.baselibrary.utils.KeyboardUtils;
 import com.htjy.baselibrary.utils.ToastUtils;
 import com.htjy.baselibrary.widget.imageloader.listener.KeyboardChangeListener;
 import com.lzy.okgo.OkGo;
@@ -23,6 +24,7 @@ import org.simple.eventbus.EventBus;
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseView {
@@ -35,7 +37,19 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
     protected View noDataStubView;
     protected View sysErrStubView;
     private ViewGroup viewMain;
+    private Unbinder unbinder;
 
+    /**
+     * 是否使用databinding
+     * @return
+     */
+    protected boolean isBinding(){
+        return false;
+    }
+
+    protected void setContentViewByBinding(int layoutId){
+
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +64,12 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
             getWindow().setEnterTransition(explode);
         }*/
         if (getLayoutId() != 0) {
-            setContentView(getLayoutId());
+            if (!isBinding()){
+                setContentView(getLayoutId());
+            }else{
+                setContentViewByBinding(getLayoutId());
+            }
+
         }
         initBind();
         hasBus = haveBus();
@@ -132,7 +151,7 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
     }
 
     protected void initBind() {
-        ButterKnife.bind(activity);
+        unbinder = ButterKnife.bind(activity);
     }
 
     protected int getLayoutId() {
@@ -163,6 +182,19 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
                 finish();
             }
         }, 0);
+    }
+
+    /**
+     * 获取返回主页面的事件
+     * @param mainAction 主页面的action
+     * @return
+     */
+    public Intent getToMainIntent(String mainAction){
+        Intent intent = new Intent(mainAction);
+        intent.setPackage(getPackageName());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        return intent;
     }
 
     /**
@@ -253,6 +285,10 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
         if (hasListenerForKey) {
             removeListenerToRootView();
         }
+
+        if (unbinder != null){
+            unbinder.unbind();
+        }
         OkGo.getInstance().cancelTag(this);
     }
 
@@ -271,5 +307,33 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN;
             decorView.setSystemUiVisibility(uiOptions);
         }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        KeyboardUtils.hideSoftInput(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (isDispatchActivityResultToFragment()){
+            dispatchRequestResult(requestCode,resultCode,data);
+        }
+    }
+
+    public void dispatchRequestResult(int requestCode, int resultCode, Intent data) {
+        List<FragmentUtils.FragmentNode> fragmentNodes = FragmentUtils.getAllFragments(getSupportFragmentManager());
+        for (FragmentUtils.FragmentNode fragmentNode : fragmentNodes) {
+            Fragment fragment = fragmentNode.getFragment();
+            if (fragment instanceof BaseFragment) {
+                fragment.onActivityResult(requestCode,resultCode,data);
+            }
+        }
+    }
+
+    public boolean isDispatchActivityResultToFragment(){
+        return false;
     }
 }

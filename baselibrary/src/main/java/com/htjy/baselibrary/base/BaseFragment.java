@@ -2,6 +2,8 @@ package com.htjy.baselibrary.base;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -36,7 +38,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     private View inflateView;
     private Unbinder unbinder;
     protected boolean mIsCreateView;
-    private boolean isInitData;
+    private boolean isUIVisible = true;
 
     /**
      * 自动调用
@@ -46,9 +48,14 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     protected abstract void initViews(Bundle savedInstanceState);
 
     /**
-     * 自动调用 ,懒加载
+     * 自动调用 ,懒加载,用于viewpager
      */
     protected abstract void lazyLoad();
+
+    /**
+     * 普通的初始化，非懒加载
+     */
+    protected abstract void initFragmentData();
 
     /**
      * 自动调用
@@ -75,7 +82,11 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         if (null == inflateView) { // 强制竖屏显示 activity.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); int layoutResId = getCreateViewLayoutId(); if (layoutResId > 0) inflateView = inflater.inflate(getCreateViewLayoutId(), container, false); // 解决点击穿透问题 inflateView.setOnTouchListener(new View.OnTouchListener() { @Override public boolean onTouch(View v, MotionEvent event) { return true; } }); } return inflateView;
             int getLayoutInflateId = getCreateViewLayoutId();
             if (getLayoutInflateId > 0) {
-                inflateView = inflater.inflate(getLayoutInflateId, container, false);
+                if (isBinding()) {
+                    inflateView = getContentViewByBinding(inflater, getLayoutInflateId, container).getRoot();
+                } else {
+                    inflateView = inflater.inflate(getLayoutInflateId, container, false);
+                }
                 unbinder = ButterKnife.bind(this, inflateView);
 
             }
@@ -97,6 +108,29 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
 
     }
 
+    protected void setDataBinding(View root) {
+
+    }
+
+    protected <T extends ViewDataBinding> T getContentViewByBinding(LayoutInflater inflater, int layoutId, @Nullable ViewGroup container) {
+        T t = DataBindingUtil.inflate(inflater, layoutId, container, false);
+        setDataBinding(t.getRoot());
+        return t;
+    }
+
+    protected <T extends ViewDataBinding> T getContentViewByBinding(View root) {
+        return DataBindingUtil.getBinding(root);
+    }
+
+    /**
+     * 是否使用databinding
+     *
+     * @return
+     */
+    protected boolean isBinding() {
+        return false;
+    }
+
     protected boolean haveBus() {
         return false;
     }
@@ -105,24 +139,6 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
 
     protected void keyboardStatus(boolean toShow, int keyboardHeight) {
 
-    }
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        if (isVisibleToUser && mIsCreateView && !isInitData) {
-            lazyLoad();
-            isInitData = true;
-        }
-    }
-
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden && mIsCreateView && !isInitData) {
-            lazyLoad();
-            isInitData = true;
-        }
     }
     /**
      * 这里才真正的创建了activity
@@ -135,20 +151,43 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         afterInflateView(savedInstanceState);
     }
 
-    //创建的时候加载
-    protected void initFirstData() {
-
-    }
 
     protected void afterInflateView(Bundle savedInstanceState) {
-        initFirstData();
-        if (!isHidden()) {
-            lazyLoad();
-            isInitData = true;
-        } else {
-            isInitData = false;
-        }
+
+        initFragmentData();
+        loadLazyData();
         initListener();
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) {
+            isUIVisible = true;
+            loadLazyData();
+        } else {
+            isUIVisible = false;
+        }
+    }
+
+    private void loadLazyData() {
+        if (mIsCreateView && isUIVisible) {
+            lazyLoad(); //数据加载完毕,恢复标记,防止重复加载 isViewCreated = false; isUIVisible = false; printLog(mTextviewContent+"可见,加载数据"); }
+            mIsCreateView = false;
+            isUIVisible = false;
+        }
+    }
+
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            isUIVisible = true;
+            loadLazyData();
+        } else {
+            isUIVisible = false;
+        }
     }
 
     @Override
