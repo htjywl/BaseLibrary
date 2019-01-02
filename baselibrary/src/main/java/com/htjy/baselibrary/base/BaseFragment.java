@@ -38,7 +38,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     private View inflateView;
     private Unbinder unbinder;
     protected boolean mIsCreateView;
-    private boolean isUIVisible = true;
+    private boolean isUIVisible;
 
     /**
      * 自动调用
