@@ -3,6 +3,8 @@ package com.htjy.baselibrary.base;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
+import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,6 +51,10 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
     protected void setContentViewByBinding(int layoutId){
 
+    }
+
+    protected <T extends ViewDataBinding> T getContentViewByBinding(int layoutId) {
+        return DataBindingUtil.setContentView(this, layoutId);
     }
 
     @Override
