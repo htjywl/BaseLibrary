@@ -209,7 +209,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     public void onResume() {
         super.onResume();
 
-        //replace模式和showhide模式第一次进入不会调用hidechange 在这里懒加载
+        //replace模式和showhide模式第一次进入不会调用hidechange 只能在这里懒加载 showhide模式这个时候还不会赋值currentMode，但默认的mode_replace会进去
         if ((currentMode == mode_showhide || currentMode == mode_replace) && isFirstResume){
             mIsCreateView = true;
             isUIVisible = true;

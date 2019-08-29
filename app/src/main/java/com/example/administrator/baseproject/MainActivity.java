@@ -32,13 +32,13 @@ public class MainActivity extends AppCompatActivity {
         TabLayout mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
 
-        mTabLayout.addTab(mTabLayout.newTab().setText("test1"));
+       /* mTabLayout.addTab(mTabLayout.newTab().setText("test1"));
         mTabLayout.addTab(mTabLayout.newTab().setText("test2"));
         viewpager.setAdapter(new TestFragmentAdapter(getSupportFragmentManager(), "test1","test2"));
-        mTabLayout.setupWithViewPager(viewpager);
+        mTabLayout.setupWithViewPager(viewpager);*/
 
 
-        /*showFragment(Test1Fragment.class);
+        showFragment(Test1Fragment.class);
         tv_test1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         ImageLoaderUtil.getInstance().loadImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg"
-        ,iv);*/
+        ,iv);
     }
 
     private void showFragment(Class<? extends Fragment> fragmentClass) {
