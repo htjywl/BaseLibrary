@@ -247,7 +247,9 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
         if (progress == null) {
             progress = new ProgressDialog(activity);
         }
-        progress.show();
+        if (!isFinishing() && !progress.isShowing()){
+            progress.show();
+        }
     }
 
     @Override

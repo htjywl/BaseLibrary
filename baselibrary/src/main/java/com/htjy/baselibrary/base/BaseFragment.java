@@ -37,8 +37,23 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     protected Activity mActivity;
     private View inflateView;
     private Unbinder unbinder;
+    /**
+     * 当前是showhide，还是viewpager，还是replace
+     */
+    private final int mode_viewpager = 1;
+    private final int mode_showhide = 2;
+    private final int mode_replace = 3;
+    private int currentMode = mode_replace;
+
+
+
+    /**
+     * 这两个只用于懒加载的判断
+     */
     protected boolean mIsCreateView;
-    private boolean isUIVisible;
+    private boolean isUIVisible = false;
+
+    private boolean isFirstResume = true;//是否刚刚打开
 
     /**
      * 自动调用
@@ -48,7 +63,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     protected abstract void initViews(Bundle savedInstanceState);
 
     /**
-     * 自动调用 ,懒加载,用于viewpager
+     * 自动调用 ,懒加载,用于viewpager和showhide 注意  replace模式每次都会加载一次
      */
     protected abstract void lazyLoad();
 
@@ -140,6 +155,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     protected void keyboardStatus(boolean toShow, int keyboardHeight) {
 
     }
+
     /**
      * 这里才真正的创建了activity
      *
@@ -157,14 +173,25 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         initFragmentData();
         loadLazyData();
         initListener();
+
+
     }
 
+    /**
+     * 在viewpager中会被调用
+     *
+     * @param isVisibleToUser
+     */
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+        currentMode = mode_viewpager;
         if (isVisibleToUser) {
             isUIVisible = true;
             loadLazyData();
+            if (!isFirstResume){
+                OnFragmentTrueResume();
+            }
         } else {
             isUIVisible = false;
         }
@@ -178,17 +205,60 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
 
+        //replace模式和showhide模式第一次进入不会调用hidechange 在这里懒加载
+        if ((currentMode == mode_showhide || currentMode == mode_replace) && isFirstResume){
+            mIsCreateView = true;
+            isUIVisible = true;
+            loadLazyData();
+        }
+
+
+        if (currentMode == mode_showhide && isVisible()) {
+            OnFragmentTrueResume();
+        }
+
+
+
+
+        if (currentMode == mode_viewpager && getUserVisibleHint()) {
+            OnFragmentTrueResume();
+        }
+
+        if (currentMode == mode_replace) {
+            OnFragmentTrueResume();
+        }
+        isFirstResume = false;
+    }
+    /**
+     * 这个是每次fragment显示在人的面前都会调用一次（综合hidechange、onResume、setVisiHint） 无论是replace showhide 还是viewpager
+     */
+    public void OnFragmentTrueResume() {
+
+    }
+
+    /**
+     * showhide的时候调用
+     *
+     * @param hidden
+     */
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
+        currentMode = mode_showhide;
         if (!hidden) {
+            OnFragmentTrueResume();
             isUIVisible = true;
             loadLazyData();
         } else {
             isUIVisible = false;
         }
     }
+
+
 
     @Override
     public void onDestroyView() {
