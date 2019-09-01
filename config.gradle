@@ -107,7 +107,7 @@ ext {
             //不知道是什么
             "calligraphy"              : 'uk.co.chrisjenx:calligraphy:2.2.0',
             //广告页，也可用作介绍页
-            "bga-banner"               : 'cn.bingoogolapple:bga-banner:2.1.7@aar',
+            "bga-banner"               : 'cn.bingoogolapple:bga-banner:2.2.6@aar',
             //跑马灯,懒得撸
             "marqueeview"              : 'com.sunfusheng:marqueeview:1.2.0',
             //通用控件
