@@ -112,7 +112,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideCircleTransform(imageView.getContext()));
+        options.circleCrop();
         Glide.with(imageView.getContext()).load(url)
 //                .placeholder(placeholder)
 //                .dontAnimate()
@@ -128,7 +128,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideCircleTransform(imageView.getContext()));
+        options.circleCrop();
         Glide.with(imageView.getContext()).load(bitmap)
 //                .placeholder(placeholder)
 //                .dontAnimate()
@@ -144,7 +144,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideCircleTransform(imageView.getContext()));
+        options.circleCrop();
         Glide.with(imageView.getContext()).load(bitmap)
 //                .placeholder(placeholder)
 //                .dontAnimate()
@@ -173,7 +173,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideCircleTransform(imageView.getContext()));
+        options.circleCrop();
         Glide.with(imageView.getContext()).load(url)
 //                .placeholder(placeholder)
 //                .dontAnimate()
@@ -202,27 +202,11 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideCircleTransform(imageView.getContext(), borderWidth, borderColor));
+        options.transform(new GlideCircleTransform( borderWidth, borderColor));
         Glide.with(imageView.getContext()).load(url)
 //                .placeholder(placeholder)
 //                .dontAnimate()
 //                .transform(new GlideCircleTransform(imageView.getContext(),borderWidth,borderColor))
-//                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .apply(options)
-                .into(imageView);
-    }
-
-    @Override
-    public void loadCircleBorderImage(String url, int placeholder, ImageView imageView, float borderWidth, int borderColor, int heightPx, int widthPx) {
-        RequestOptions options = new RequestOptions();
-        options.placeholder(placeholder);
-        options.diskCacheStrategy(DiskCacheStrategy.ALL);
-        options.dontAnimate();
-        options.transform(new GlideCircleTransform(imageView.getContext(), borderWidth, borderColor, heightPx, widthPx));
-        Glide.with(imageView.getContext()).load(url)
-//                .placeholder(placeholder)
-//                .dontAnimate()
-//                .transform(new GlideCircleTransform(imageView.getContext(),borderWidth,borderColor,heightPx,widthPx))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
                 .into(imageView);

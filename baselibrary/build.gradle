@@ -5,7 +5,7 @@ apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
 android {
-    compileSdkVersion  26
+    compileSdkVersion  rootProject.ext.android["compileSdkVersion"]
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -45,6 +45,7 @@ buildscript {
 }
 dependencies {
     api fileTree(include: ['*.jar'], dir: 'libs')
+    annotationProcessor rootProject.ext.dependencies["glide-annotationProcessor"]
     //support
     api(rootProject.ext.dependencies["support-v4"]) {
         exclude module: 'support-annotations'
@@ -125,7 +126,7 @@ def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
 //gradlew clean bintrayUpload
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。gradlew clean
-version = "1.5.0"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "1.5.3"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {

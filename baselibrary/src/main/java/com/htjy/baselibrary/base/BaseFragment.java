@@ -5,8 +5,11 @@ import android.app.ProgressDialog;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +19,8 @@ import com.lzy.okgo.OkGo;
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
 import org.simple.eventbus.EventBus;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -37,23 +42,18 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     protected Activity mActivity;
     private View inflateView;
     private Unbinder unbinder;
-    /**
-     * 当前是showhide，还是viewpager，还是replace
-     */
-    private final int mode_viewpager = 1;
-    private final int mode_showhide = 2;
-    private final int mode_replace = 3;
-    private int currentMode = mode_replace;
+    private static final String FRAGMENTATION_STATE_SAVE_IS_INVISIBLE_WHEN_LEAVE = "fragmentation_invisible_when_leave";
+    private static final String FRAGMENTATION_STATE_SAVE_COMPAT_REPLACE = "fragmentation_compat_replace";
 
 
-
-    /**
-     * 这两个只用于懒加载的判断
-     */
-    protected boolean mIsCreateView;
-    private boolean isUIVisible = false;
-
-    private boolean isFirstResume = true;//是否刚刚打开
+    // SupportVisible相关
+    private boolean mIsSupportVisible;
+    private boolean mNeedDispatch = true;
+    private boolean mInvisibleWhenLeave;
+    private boolean mIsFirstVisible = true;
+    private boolean mFirstCreateViewCompatReplace = true;
+    private Bundle mSaveInstanceState;
+    private Handler mHandler;
 
     /**
      * 自动调用
@@ -66,6 +66,10 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
      * 自动调用 ,懒加载,用于viewpager和showhide 注意  replace模式每次都会加载一次
      */
     protected abstract void lazyLoad();
+
+    protected void lazyLoad(Bundle savedInstanceState) {
+
+    }
 
     /**
      * 普通的初始化，非懒加载
@@ -91,6 +95,26 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         super.onViewCreated(view, savedInstanceState);
     }
 */
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            mInvisibleWhenLeave = savedInstanceState.getBoolean(FRAGMENTATION_STATE_SAVE_IS_INVISIBLE_WHEN_LEAVE);
+            mFirstCreateViewCompatReplace = savedInstanceState.getBoolean(FRAGMENTATION_STATE_SAVE_COMPAT_REPLACE);
+            mSaveInstanceState = savedInstanceState;
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean(FRAGMENTATION_STATE_SAVE_IS_INVISIBLE_WHEN_LEAVE, mInvisibleWhenLeave);
+        outState.putBoolean(FRAGMENTATION_STATE_SAVE_COMPAT_REPLACE, mFirstCreateViewCompatReplace);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -116,7 +140,8 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         if (null != parent) {
             parent.removeView(inflateView);
         }
-        mIsCreateView = true;
+
+
         initStateLayout(inflateView);
         initViews(savedInstanceState);
         return inflateView;
@@ -164,75 +189,30 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        if (!mFirstCreateViewCompatReplace && getTag() != null && getTag().startsWith("android:switcher:")) {
+            return;
+        }
+
+        if (mFirstCreateViewCompatReplace) {
+            mFirstCreateViewCompatReplace = false;
+        }
+
+        if (!mInvisibleWhenLeave && !isHidden() && getUserVisibleHint()) {
+            if (getParentFragment() == null || isFragmentVisible(getParentFragment())) {
+                mNeedDispatch = false;
+                safeDispatchUserVisibleHint(true);
+            }
+        }
+
         afterInflateView(savedInstanceState);
     }
 
 
     protected void afterInflateView(Bundle savedInstanceState) {
-
         initFragmentData();
-        loadLazyData();
         initListener();
-
-
     }
 
-    /**
-     * 在viewpager中会被调用
-     *
-     * @param isVisibleToUser
-     */
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        currentMode = mode_viewpager;
-        if (isVisibleToUser) {
-            isUIVisible = true;
-            loadLazyData();
-            if (!isFirstResume){
-                OnFragmentTrueResume();
-            }
-        } else {
-            isUIVisible = false;
-        }
-    }
-
-    private void loadLazyData() {
-        if (mIsCreateView && isUIVisible) {
-            lazyLoad(); //数据加载完毕,恢复标记,防止重复加载 isViewCreated = false; isUIVisible = false; printLog(mTextviewContent+"可见,加载数据"); }
-            mIsCreateView = false;
-            isUIVisible = false;
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        //replace模式和showhide模式第一次进入不会调用hidechange 只能在这里懒加载 showhide模式这个时候还不会赋值currentMode，但默认的mode_replace会进去
-        if ((currentMode == mode_showhide || currentMode == mode_replace) && isFirstResume){
-            mIsCreateView = true;
-            isUIVisible = true;
-            loadLazyData();
-        }
-
-
-        if (currentMode == mode_showhide && isVisible()) {
-            OnFragmentTrueResume();
-        }
-
-
-
-
-        if (currentMode == mode_viewpager && getUserVisibleHint()) {
-            OnFragmentTrueResume();
-        }
-
-        if (currentMode == mode_replace) {
-            OnFragmentTrueResume();
-        }
-        isFirstResume = false;
-    }
     /**
      * 这个是每次fragment显示在人的面前都会调用一次（综合hidechange、onResume、setVisiHint） 无论是replace showhide 还是viewpager
      */
@@ -240,25 +220,8 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
 
     }
 
-    /**
-     * showhide的时候调用
-     *
-     * @param hidden
-     */
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        currentMode = mode_showhide;
-        if (!hidden) {
-            OnFragmentTrueResume();
-            isUIVisible = true;
-            loadLazyData();
-        } else {
-            isUIVisible = false;
-        }
+    protected void OnFragmentTruePause() {
     }
-
-
 
     @Override
     public void onDestroyView() {
@@ -327,4 +290,155 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     }
 
     public abstract int getCreateViewLayoutId();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!mIsFirstVisible) {
+            if (!mIsSupportVisible && !mInvisibleWhenLeave && isFragmentVisible(this)) {
+                mNeedDispatch = false;
+                dispatchSupportVisible(true);
+            }
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mIsSupportVisible && isFragmentVisible(this)) {
+            mNeedDispatch = false;
+            mInvisibleWhenLeave = false;
+            dispatchSupportVisible(false);
+        } else {
+            mInvisibleWhenLeave = true;
+        }
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden && !isResumed()) {
+            //if fragment is shown but not resumed, ignore...
+            mInvisibleWhenLeave = false;
+            return;
+        }
+        if (hidden) {
+            safeDispatchUserVisibleHint(false);
+        } else {
+            enqueueDispatchVisible();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isResumed() || (!isAdded() && isVisibleToUser)) {
+            if (!mIsSupportVisible && isVisibleToUser) {
+                safeDispatchUserVisibleHint(true);
+            } else if (mIsSupportVisible && !isVisibleToUser) {
+                dispatchSupportVisible(false);
+            }
+        }
+    }
+
+    private void safeDispatchUserVisibleHint(boolean visible) {
+        if (mIsFirstVisible) {
+            if (!visible) return;
+            enqueueDispatchVisible();
+        } else {
+            dispatchSupportVisible(visible);
+        }
+    }
+
+    private void enqueueDispatchVisible() {
+        getHandler().post(new Runnable() {
+            @Override
+            public void run() {
+                dispatchSupportVisible(true);
+            }
+        });
+    }
+
+    private void dispatchSupportVisible(boolean visible) {
+        if (visible && isParentInvisible()) return;
+
+        if (mIsSupportVisible == visible) {
+            mNeedDispatch = true;
+            return;
+        }
+
+        mIsSupportVisible = visible;
+
+        if (visible) {
+            if (checkAddState()) return;
+            this.OnFragmentTrueResume();
+
+            if (mIsFirstVisible) {
+                mIsFirstVisible = false;
+                lazyLoad();
+                lazyLoad(mSaveInstanceState);
+            }
+            dispatchChild(true);
+        } else {
+            dispatchChild(false);
+            this.OnFragmentTruePause();
+        }
+    }
+
+
+    private void dispatchChild(boolean visible) {
+        if (!mNeedDispatch) {
+            mNeedDispatch = true;
+        } else {
+            if (checkAddState()) return;
+            FragmentManager fragmentManager = getChildFragmentManager();
+            List<Fragment> childFragments = getActiveFragments(fragmentManager);
+            if (childFragments != null) {
+                for (Fragment child : childFragments) {
+                    if (child instanceof BaseFragment && !child.isHidden() && child.getUserVisibleHint()) {
+                        dispatchSupportVisible(visible);
+                    }
+                }
+            }
+        }
+    }
+
+    private boolean isParentInvisible() {
+        Fragment parentFragment = getParentFragment();
+
+        if (parentFragment instanceof BaseFragment) {
+            return !((BaseFragment) parentFragment).isSupportVisible();
+        }
+
+        return parentFragment != null && !parentFragment.isVisible();
+    }
+
+    private boolean checkAddState() {
+        if (!isAdded()) {
+            mIsSupportVisible = !mIsSupportVisible;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isFragmentVisible(Fragment fragment) {
+        return !fragment.isHidden() && fragment.getUserVisibleHint();
+    }
+
+    public boolean isSupportVisible() {
+        return mIsSupportVisible;
+    }
+
+    private Handler getHandler() {
+        if (mHandler == null) {
+            mHandler = new Handler(Looper.getMainLooper());
+        }
+        return mHandler;
+    }
+
+
+    public List<Fragment> getActiveFragments(FragmentManager fragmentManager) {
+        return fragmentManager.getFragments();
+    }
+
 }
