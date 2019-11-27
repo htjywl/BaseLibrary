@@ -31,7 +31,8 @@ public class MyGlideModule extends AppGlideModule {
         //设置内存缓存大小
         builder.setMemoryCache(new LruResourceCache(memoryCacheSize));
         builder.setBitmapPool(new LruBitmapPool(memoryCacheSize));
-        ViewTarget.setTagId(R.id.glide_tag_id);
+
+        //ViewTarget.setTagId(R.id.glide_tag_id);
     }
 
 //    @Override

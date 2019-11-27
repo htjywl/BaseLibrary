@@ -94,7 +94,7 @@ dependencies {
     //兼容动画库
     api rootProject.ext.dependencies["nineoldandroids"]
     //通用控件库
-    api('com.lyb.besttimer:pluginwidget:0.0.123') {
+    api('com.lyb.besttimer:pluginwidget:0.0.136') {
         exclude module: 'recyclerview-v7'
     }
     /* //友盟
@@ -126,7 +126,7 @@ def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
 //gradlew clean bintrayUpload
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。gradlew clean
-version = "1.5.3"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "1.5.6"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {

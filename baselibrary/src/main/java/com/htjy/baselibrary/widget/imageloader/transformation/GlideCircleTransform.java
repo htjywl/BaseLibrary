@@ -64,11 +64,12 @@ public class GlideCircleTransform extends BitmapTransformation {
 
         /************************描边*********************/
         //注意：避免出现描边被屏幕边缘裁掉
-        float borderRadius = radius - (borderWidth / 2);
+        float borderRadius = radius - (borderWidth  / 2);
         //画边框
         canvas.drawCircle(radius, radius, borderRadius, mBorderPaint);
         return result;
     }
+
 
     @Override
     public void updateDiskCacheKey(MessageDigest messageDigest) {
@@ -79,7 +80,6 @@ public class GlideCircleTransform extends BitmapTransformation {
     public boolean equals(Object o) {
         return o instanceof GlideCircleTransform;
     }
-
     @Override
     public int hashCode() {
         return ID.hashCode();
