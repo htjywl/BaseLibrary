@@ -162,7 +162,7 @@ public abstract class JsonDialogCallback<T> extends JsonCallback<T> {
     @Override
     public void onError(Response<T> response) {
         super.onError(response);
-        if (!response.getRawCall().isCanceled()) {
+        if (response.getRawCall() == null || !response.getRawCall().isCanceled()) {
             onSimpleError(response);
         }
     }
