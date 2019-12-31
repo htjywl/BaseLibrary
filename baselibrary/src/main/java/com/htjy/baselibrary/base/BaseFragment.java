@@ -226,9 +226,11 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        OkGo.getInstance().cancelTag(this);
         if (unbinder != null) {
             unbinder.unbind();
         }
+
         if (hasBus) {
             EventBus.getDefault().unregister(this);
         }
@@ -286,7 +288,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         if (hasBus) {
             EventBus.getDefault().unregister(this);
         }
-        OkGo.getInstance().cancelTag(this);
+
     }
 
     public abstract int getCreateViewLayoutId();
