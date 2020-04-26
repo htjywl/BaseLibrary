@@ -78,8 +78,11 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
         }
         initBind();
-        hasBus = haveBus();
-        if (hasBus) {
+        hasBus = haveBus() || haveBusWithSticky();
+
+        if (haveBusWithSticky()){
+            EventBus.getDefault().registerSticky(this);
+        }else if (haveBus()){
             EventBus.getDefault().register(this);
         }
         hasListenerForKey = haveListenerForKey();
@@ -174,6 +177,9 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
 
     protected boolean haveBus() {
+        return false;
+    }
+    protected boolean haveBusWithSticky() {
         return false;
     }
 

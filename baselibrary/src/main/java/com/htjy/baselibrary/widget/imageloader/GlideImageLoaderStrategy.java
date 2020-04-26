@@ -24,6 +24,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
+import com.htjy.baselibrary.utils.EmptyUtils;
 import com.htjy.baselibrary.utils.SizeUtils;
 import com.htjy.baselibrary.widget.imageloader.listener.ImageDownloadListener;
 import com.htjy.baselibrary.widget.imageloader.listener.ImageDrawableListener;
@@ -49,17 +50,17 @@ import java.io.OutputStream;
 public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
-    public void loadImage(String url, int placeholder, ImageView imageView) {
+    public void loadImage(Object url, int placeholder, ImageView imageView) {
         loadNormal(imageView.getContext(), url, placeholder, imageView);
     }
 
     @Override
-    public void loadImageWithListener(String url, int placeholder, ImageView imageView, ImageLoadListener listener) {
+    public void loadImageWithListener(Object url, int placeholder, ImageView imageView, ImageLoadListener listener) {
         loadNormal(imageView.getContext(), url, placeholder, imageView, listener);
     }
 
     @Override
-    public void loadImage(Context context, String url, int placeholder, ImageView imageView) {
+    public void loadImage(Context context, Object url, int placeholder, ImageView imageView) {
         loadNormal(context, url, placeholder, imageView);
     }
 
@@ -95,7 +96,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
      * @param imageView
      */
     @Override
-    public void loadImage(String url, ImageView imageView) {
+    public void loadImage(Object url, ImageView imageView) {
         RequestOptions options = new RequestOptions();
         options.placeholder(imageView.getDrawable());
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -107,7 +108,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadCircleImage(String url, int placeholder, ImageView imageView) {
+    public void loadCircleImage(Object url, int placeholder, ImageView imageView) {
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -168,7 +169,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadCircleImage(String url, int placeholder, ImageView imageView, ImageLoadListener listener) {
+    public void loadCircleImage(Object url, int placeholder, ImageView imageView, ImageLoadListener listener) {
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -197,7 +198,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadCircleBorderImage(String url, int placeholder, ImageView imageView, float borderWidth, int borderColor) {
+    public void loadCircleBorderImage(Object url, int placeholder, ImageView imageView, float borderWidth, int borderColor) {
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -238,7 +239,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadCornerImage(String url, int placeholder, ImageView imageView, int dp) {
+    public void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp) {
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -255,7 +256,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadCornerImage(String url, int placeholder, ImageView imageView, int dp, ImageLoadListener listener) {
+    public void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp, ImageLoadListener listener) {
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -285,7 +286,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
 
     @Override
-    public void loadImageWithAppCxt(String url, ImageView imageView) {
+    public void loadImageWithAppCxt(Object url, ImageView imageView) {
         RequestOptions options = new RequestOptions();
         options.placeholder(imageView.getDrawable());
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -297,12 +298,12 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
 //    @Override
-//    public void loadGifImage(String url, int placeholder, ImageView imageView) {
+//    public void loadGifImage(Object url, int placeholder, ImageView imageView) {
 //        loadGif(imageView.getContext(), url, placeholder, imageView);
 //    }
 
 //    @Override
-//    public void loadImageWithProgress(String url, final ImageView imageView, final ProgressLoadListener listener) {
+//    public void loadImageWithProgress(Object url, final ImageView imageView, final ProgressLoadListener listener) {
 //        Glide.with(imageView.getContext()).using(new ProgressModelLoader(new ProgressUIListener() {
 //            @Override
 //            public void update(final int bytesRead, final int contentLength) {
@@ -331,7 +332,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //
 //
 //    @Override
-//    public void loadGifWithPrepareCall(String url, ImageView imageView, final SourceReadyListener listener) {
+//    public void loadGifWithPrepareCall(Object url, ImageView imageView, final SourceReadyListener listener) {
 //        Glide.with(imageView.getContext()).load(url).asGif()
 //                .skipMemoryCache(true)
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE).
@@ -350,7 +351,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //    }
 //
 //    @Override
-//    public void loadImageWithPrepareCall(String url, ImageView imageView, int placeholder, final SourceReadyListener listener) {
+//    public void loadImageWithPrepareCall(Object url, ImageView imageView, int placeholder, final SourceReadyListener listener) {
 //        Glide.with(imageView.getContext()).load(url)
 //                .skipMemoryCache(true)
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -414,8 +415,8 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void saveImage(Context context, String url, String savePath, String saveFileName, ImageSaveListener listener) {
-        if (!CommonUtils.isSDCardExsit() || TextUtils.isEmpty(url)) {
+    public void saveImage(Context context, Object url, String savePath, String saveFileName, ImageSaveListener listener) {
+        if (!CommonUtils.isSDCardExsit() || EmptyUtils.isEmpty(url)) {
             listener.onSaveFail();
             return;
         }
@@ -465,7 +466,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     }
 
     @Override
-    public void loadDrawable(Context context, String url, ImageDrawableListener listener) {
+    public void loadDrawable(Context context, Object url, ImageDrawableListener listener) {
         SimpleTarget<Drawable> simpleTarget = new SimpleTarget<Drawable>() {
             @Override
             public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
@@ -507,7 +508,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     /**
      * load image with Glide
      */
-    private void loadNormal(final Context ctx, final String url, int placeholder, ImageView imageView) {
+    private void loadNormal(final Context ctx, final Object url, int placeholder, ImageView imageView) {
         /**
          *  为其添加缓存策略,其中缓存策略可以为:Source及None,None及为不缓存,Source缓存原型.如果为ALL和Result就不行.然后几个issue的连接:
          https://github.com/bumptech/glide/issues/513
@@ -555,7 +556,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
     /**
      * load image with Glide
      */
-    private void loadNormal(final Context ctx, final String url, int placeholder, ImageView imageView, ImageLoadListener listeners) {
+    private void loadNormal(final Context ctx, final Object url, int placeholder, ImageView imageView, ImageLoadListener listeners) {
         /**
          *  为其添加缓存策略,其中缓存策略可以为:Source及None,None及为不缓存,Source缓存原型.如果为ALL和Result就不行.然后几个issue的连接:
          https://github.com/bumptech/glide/issues/513
@@ -606,7 +607,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //    /**
 //     * load image with Glide
 //     */
-//    private void loadGif(final Context ctx, String url, int placeholder, ImageView imageView) {
+//    private void loadGif(final Context ctx, Object url, int placeholder, ImageView imageView) {
 //        final long startTime = System.currentTimeMillis();
 //        Glide.with(ctx).load(url).asGif()
 //                .placeholder(placeholder).skipMemoryCache(true)

@@ -132,8 +132,11 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         } else {
             unbinder = ButterKnife.bind(this, inflateView);
         }
-        hasBus = haveBus();
-        if (hasBus) {
+        hasBus = haveBus() || haveBusWithSticky();
+
+        if (haveBusWithSticky()){
+            EventBus.getDefault().registerSticky(this);
+        }else if (haveBus()){
             EventBus.getDefault().register(this);
         }
         ViewGroup parent = (ViewGroup) inflateView.getParent();
@@ -172,6 +175,10 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     }
 
     protected boolean haveBus() {
+        return false;
+    }
+
+    protected boolean haveBusWithSticky() {
         return false;
     }
 

@@ -53,22 +53,22 @@ public class ImageLoaderUtil {
      * @param placeholder
      * @param imageView
      */
-    public void loadImage(String url, int placeholder, ImageView imageView) {
+    public void loadImage(Object url, int placeholder, ImageView imageView) {
         mStrategy.loadImage(imageView.getContext(), url, placeholder, imageView);
     }
 
-    public void loadImageWithListener(String url, int placeholder, ImageView imageView, ImageLoadListener listener) {
+    public void loadImageWithListener(Object url, int placeholder, ImageView imageView, ImageLoadListener listener) {
         mStrategy.loadImageWithListener(url, placeholder, imageView, listener);
     }
 
-//    public void loadGifImage(String url, int placeholder, ImageView imageView) {
+//    public void loadGifImage(Object url, int placeholder, ImageView imageView) {
 //        mStrategy.loadGifImage(url, placeholder, imageView);
 //    }
 
-    public void loadCircleImage(String url, int placeholder, ImageView imageView) {
+    public void loadCircleImage(Object url, int placeholder, ImageView imageView) {
         mStrategy.loadCircleImage(url, placeholder, imageView);
     }
-    public void loadCentercropCircleImage(String url, int placeholder, ImageView imageView) {
+    public void loadCentercropCircleImage(Object url, int placeholder, ImageView imageView) {
         mStrategy.loadCentercropCircleImage(url, placeholder, imageView);
     }
 
@@ -76,33 +76,33 @@ public class ImageLoaderUtil {
         mStrategy.loadCircleImage(bitmap, placeholder, imageView);
     } public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView,ImageLoadListener listener) {
         mStrategy.loadCircleImage(bitmap, placeholder, imageView,listener);
-    }public void loadCircleImage(String url, int placeholder, ImageView imageView,ImageLoadListener listener) {
+    }public void loadCircleImage(Object url, int placeholder, ImageView imageView,ImageLoadListener listener) {
         mStrategy.loadCircleImage(url, placeholder, imageView,listener);
     }
 
-    public void loadCircleBorderImage(String url, int placeholder, ImageView imageView, float borderWidth, int borderColor) {
+    public void loadCircleBorderImage(Object url, int placeholder, ImageView imageView, float borderWidth, int borderColor) {
         mStrategy.loadCircleBorderImage(url, placeholder, imageView, borderWidth, borderColor);
     }
 
 
 
-    public void loadImage(String url, ImageView imageView) {
+    public void loadImage(Object url, ImageView imageView) {
         mStrategy.loadImage(url, imageView);
     }
 
-    public void loadImageWithAppCxt(String url, ImageView imageView) {
+    public void loadImageWithAppCxt(Object url, ImageView imageView) {
         mStrategy.loadImageWithAppCxt(url, imageView);
     }
 
-//    public void loadImageWithProgress(String url, ImageView imageView, ProgressLoadListener listener) {
+//    public void loadImageWithProgress(Object url, ImageView imageView, ProgressLoadListener listener) {
 //        mStrategy.loadImageWithProgress(url, imageView, listener);
 //    }
 //
-//    public void loadGifWithPrepareCall(String url, ImageView imageView, SourceReadyListener listener) {
+//    public void loadGifWithPrepareCall(Object url, ImageView imageView, SourceReadyListener listener) {
 //        mStrategy.loadGifWithPrepareCall(url, imageView, listener);
 //    }
 //
-//    public void loadImageWithPrepareCall(String url, ImageView imageView, int placeholder, SourceReadyListener listener) {
+//    public void loadImageWithPrepareCall(Object url, ImageView imageView, int placeholder, SourceReadyListener listener) {
 //        mStrategy.loadImageWithPrepareCall(url, imageView, placeholder, listener);
 //    }
 
@@ -110,11 +110,11 @@ public class ImageLoaderUtil {
         mStrategy.loadCornerImage(bitmap, placeholder, imageView, dp);
     }
 
-    public void loadCornerImg(String url, ImageView imageView, int placeholder, int dp) {
+    public void loadCornerImg(Object url, ImageView imageView, int placeholder, int dp) {
         mStrategy.loadCornerImage(url, placeholder, imageView, dp);
     }
 
-    public void loadCornerImgWithListener(String url, ImageView imageView, int placeholder, int dp, ImageLoadListener listener) {
+    public void loadCornerImgWithListener(Object url, ImageView imageView, int placeholder, int dp, ImageLoadListener listener) {
         mStrategy.loadCornerImage(url, placeholder, imageView, dp, listener);
     }
 
@@ -177,7 +177,7 @@ public class ImageLoaderUtil {
         return mStrategy.getCacheSize(context);
     }
 
-    public void saveImage(Context context, String url, String savePath, String saveFileName, ImageSaveListener listener) {
+    public void saveImage(Context context, Object url, String savePath, String saveFileName, ImageSaveListener listener) {
         mStrategy.saveImage(context, url, savePath, saveFileName, listener);
     }
 
@@ -185,7 +185,7 @@ public class ImageLoaderUtil {
         mStrategy.downloadOnly(context, url, listener);
     }
 
-    public void loadDrawable(Context context, String url, ImageDrawableListener listener) {
+    public void loadDrawable(Context context, Object url, ImageDrawableListener listener) {
         mStrategy.loadDrawable(context, url, listener);
     }
 

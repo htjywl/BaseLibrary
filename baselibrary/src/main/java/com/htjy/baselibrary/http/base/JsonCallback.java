@@ -2,6 +2,7 @@ package com.htjy.baselibrary.http.base;
 
 import com.htjy.baselibrary.bean.BaseBean;
 import com.htjy.baselibrary.bean.SimpleBaseBean;
+import com.htjy.baselibrary.utils.EmptyUtils;
 import com.htjy.baselibrary.utils.ToastUtils;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.convert.StringConvert;
@@ -113,10 +114,10 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
     }
 
 
-
     protected boolean showErrorFromServer() {
         return false;
     }
+
     /**
      * 转码http的网址，只对中文进行转码
      *
@@ -165,11 +166,19 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
             if (showErrorFromServer()) {
                 ToastUtils.showShortToast(((BaseException) exception).getDisplayMessage());
             }
-        } else if (exception instanceof JSONException){
-            ToastUtils.showShortToast(BaseException.JSON_ERROR_MESSAGE);
-        }
-        else{
-            ToastUtils.showShortToast(BaseException.NETWORD_ERROR_MESSAGE);
+        } else if (exception instanceof JSONException) {
+            if (showErrorFromServer()) {
+                ToastUtils.showShortToast(BaseException.JSON_ERROR_MESSAGE);
+            }
+        } else {
+            if (showErrorFromServer()) {
+                if (exception != null && EmptyUtils.isNotEmpty(exception.getMessage())) {
+                    ToastUtils.showShortToast(exception.getMessage());
+                } else {
+                    ToastUtils.showShortToast(BaseException.NETWORD_ERROR_MESSAGE);
+                }
+            }
+
         }
     }
 
