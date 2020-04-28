@@ -2,17 +2,24 @@ package com.htjy.baselibrary.widget.imageloader;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.support.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.Registry;
+import com.bumptech.glide.integration.okhttp3.OkHttpUrlLoader;
 import com.bumptech.glide.load.DecodeFormat;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.engine.bitmap_recycle.LruBitmapPool;
 import com.bumptech.glide.load.engine.cache.LruResourceCache;
+import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.module.GlideModule;
 import com.bumptech.glide.request.target.ViewTarget;
 import com.htjy.baselibrary.R;
+import com.lzy.okgo.OkGo;
+
+import java.io.InputStream;
 
 /**
  * DES：自定义一个GlideModule
@@ -35,9 +42,10 @@ public class MyGlideModule extends AppGlideModule {
         //ViewTarget.setTagId(R.id.glide_tag_id);
     }
 
-//    @Override
-//    public void registerComponents(Context context, Glide glide) {
-//        // register ModelLoaders here.
-//
-//    }
+
+    @Override
+    public void registerComponents(@NonNull Context context, @NonNull Glide glide, @NonNull Registry registry) {
+        OkHttpUrlLoader.Factory factory = new OkHttpUrlLoader.Factory(OkGo.getInstance().getOkHttpClient());
+        registry.replace(GlideUrl.class, InputStream.class,factory);
+    }
 }
