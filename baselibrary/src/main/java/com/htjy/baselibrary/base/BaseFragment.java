@@ -405,7 +405,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
             if (childFragments != null) {
                 for (Fragment child : childFragments) {
                     if (child instanceof BaseFragment && !child.isHidden() && child.getUserVisibleHint()) {
-                        dispatchSupportVisible(visible);
+                        ((BaseFragment)child).dispatchSupportVisible(visible);
                     }
                 }
             }
