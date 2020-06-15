@@ -109,8 +109,8 @@ ext {
             "loadinglayout"            : "com.lai.weavey:loadinglayout:1.3.1",
             "flycoTabLayout"           : "com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar",
 
-            "SmartRefreshLayout"         : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-32",
-            "SmartRefreshHeader"         : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-32",
+            "SmartRefreshLayout"         : "com.scwang.smartrefresh:SmartRefreshLayout:1.1.3",
+            "SmartRefreshHeader"         : "com.scwang.smartrefresh:SmartRefreshHeader:1.1.3",
             //不知道是什么
             "calligraphy"              : 'uk.co.chrisjenx:calligraphy:2.2.0',
             //广告页，也可用作介绍页
