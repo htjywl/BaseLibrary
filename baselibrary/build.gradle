@@ -90,9 +90,9 @@ dependencies {
     api rootProject.ext.dependencies['multidex']
 
     //通用控件库 不支持AndroidX 先去掉
-    /*api('com.lyb.besttimer:pluginwidget:0.0.136') {
+    api('com.lyb.besttimer:pluginwidget:2.0.0') {
         exclude module: 'recyclerview-v7'
-    }*/
+    }
     //不支持AndroidX 去掉
    // api 'com.yqritc:recyclerview-flexibledivider:1.4.0'
     api 'com.orhanobut:logger:2.2.0'
@@ -118,7 +118,7 @@ def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
 //gradlew clean bintrayUpload
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。gradlew clean
-version = "2.0.0"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "2.0.1"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {

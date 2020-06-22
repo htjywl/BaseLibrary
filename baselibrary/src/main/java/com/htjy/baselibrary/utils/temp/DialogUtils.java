@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.htjy.baselibrary.R;
+import com.lyb.besttimer.pluginwidget.view.recyclerview.adapter.AdapterPosClick;
 
 import java.util.List;
 
