@@ -8,7 +8,8 @@ import android.content.Intent;
 import android.os.Build;
 import android.text.TextUtils;
 
-import org.simple.eventbus.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 

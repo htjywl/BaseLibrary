@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.htjy.baselibrary.http.HttpFactory;
-import com.htjy.baselibrary.utils.DialogUtils;
-import com.htjy.baselibrary.utils.ToastUtils;
+import com.htjy.baselibrary.utils.temp.DialogUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.StringCallback;
 import com.lzy.okgo.convert.StringConvert;
@@ -138,11 +138,11 @@ public abstract class StringDialogCallback extends StringCallback {
         Throwable exception = response.getException();
         if (exception instanceof BaseException) {
         } else if (exception instanceof JSONException) {
-            ToastUtils.showShortToast(BaseException.JSON_ERROR_MESSAGE);
+            ToastUtils.showShort(BaseException.JSON_ERROR_MESSAGE);
         } else if (exception instanceof SocketTimeoutException) {
-            ToastUtils.showShortToast(BaseException.NETWORD_TIMEOUT_MESSAGE);
+            ToastUtils.showShort(BaseException.NETWORD_TIMEOUT_MESSAGE);
         } else {
-            ToastUtils.showShortToast(BaseException.NETWORD_ERROR_MESSAGE);
+            ToastUtils.showShort(BaseException.NETWORD_ERROR_MESSAGE);
         }
     }
 

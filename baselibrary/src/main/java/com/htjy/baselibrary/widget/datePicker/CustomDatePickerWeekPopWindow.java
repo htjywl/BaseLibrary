@@ -12,9 +12,9 @@ import android.view.WindowManager;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.blankj.utilcode.util.LogUtils;
+import com.blankj.utilcode.util.ScreenUtils;
 import com.htjy.baselibrary.R;
-import com.htjy.baselibrary.utils.LogUtils;
-import com.htjy.baselibrary.utils.ScreenUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

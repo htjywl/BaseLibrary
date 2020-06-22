@@ -2,23 +2,28 @@ package com.htjy.baselibrary.base;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.htjy.baselibrary.utils.ToastUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.lzy.okgo.OkGo;
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle3.components.support.RxFragment;
 
-import org.simple.eventbus.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -132,11 +137,9 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         } else {
             unbinder = ButterKnife.bind(this, inflateView);
         }
-        hasBus = haveBus() || haveBusWithSticky();
+        hasBus = haveBus();
 
-        if (haveBusWithSticky()){
-            EventBus.getDefault().registerSticky(this);
-        }else if (haveBus()){
+        if (haveBus()) {
             EventBus.getDefault().register(this);
         }
         ViewGroup parent = (ViewGroup) inflateView.getParent();
@@ -177,12 +180,6 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     protected boolean haveBus() {
         return false;
     }
-
-    protected boolean haveBusWithSticky() {
-        return false;
-    }
-
-    ;
 
     protected void keyboardStatus(boolean toShow, int keyboardHeight) {
 
@@ -271,22 +268,22 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
 
     @Override
     public void toast(CharSequence s) {
-        ToastUtils.showShortToast(s);
+        ToastUtils.showShort(s);
     }
 
     @Override
     public void toast(int id) {
-        ToastUtils.showShortToast(id);
+        ToastUtils.showShort(id);
     }
 
     @Override
     public void toastLong(CharSequence s) {
-        ToastUtils.showLongToast(s);
+        ToastUtils.showLong(s);
     }
 
     @Override
     public void toastLong(int id) {
-        ToastUtils.showLongToast(id);
+        ToastUtils.showLong(id);
     }
 
     @Override
@@ -405,7 +402,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
             if (childFragments != null) {
                 for (Fragment child : childFragments) {
                     if (child instanceof BaseFragment && !child.isHidden() && child.getUserVisibleHint()) {
-                        ((BaseFragment)child).dispatchSupportVisible(visible);
+                        ((BaseFragment) child).dispatchSupportVisible(visible);
                     }
                 }
             }

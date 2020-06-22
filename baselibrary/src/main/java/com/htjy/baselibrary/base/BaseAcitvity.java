@@ -3,25 +3,28 @@ package com.htjy.baselibrary.base;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.databinding.DataBindingUtil;
-import android.databinding.ViewDataBinding;
+
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-import com.htjy.baselibrary.utils.FragmentUtils;
-import com.htjy.baselibrary.utils.KeyboardUtils;
-import com.htjy.baselibrary.utils.ToastUtils;
+import com.blankj.utilcode.util.FragmentUtils;
+import com.blankj.utilcode.util.KeyboardUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.htjy.baselibrary.widget.imageloader.listener.KeyboardChangeListener;
 import com.lzy.okgo.OkGo;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
-import org.simple.eventbus.EventBus;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -78,11 +81,9 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
         }
         initBind();
-        hasBus = haveBus() || haveBusWithSticky();
+        hasBus = haveBus() ;
 
-        if (haveBusWithSticky()){
-            EventBus.getDefault().registerSticky(this);
-        }else if (haveBus()){
+        if (haveBus()){
             EventBus.getDefault().register(this);
         }
         hasListenerForKey = haveListenerForKey();
@@ -179,9 +180,6 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
     protected boolean haveBus() {
         return false;
     }
-    protected boolean haveBusWithSticky() {
-        return false;
-    }
 
     protected boolean haveListenerForKey() {
         return false;
@@ -267,22 +265,22 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
     @Override
     public void toast(CharSequence s) {
-        ToastUtils.showShortToast(s);
+        ToastUtils.showShort(s);
     }
 
     @Override
     public void toast(int id) {
-        ToastUtils.showShortToast(id);
+        ToastUtils.showShort(id);
     }
 
     @Override
     public void toastLong(CharSequence s) {
-        ToastUtils.showLongToast(s);
+        ToastUtils.showShort(s);
     }
 
     @Override
     public void toastLong(int id) {
-        ToastUtils.showLongToast(id);
+        ToastUtils.showShort(id);
     }
 
     @Override

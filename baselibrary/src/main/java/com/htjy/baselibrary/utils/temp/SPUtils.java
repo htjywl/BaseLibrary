@@ -1,8 +1,8 @@
-package com.htjy.baselibrary.utils;
+package com.htjy.baselibrary.utils.temp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import java.util.Collections;
 import java.util.HashMap;

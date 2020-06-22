@@ -7,10 +7,12 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Looper;
-import android.support.annotation.Nullable;
-import android.text.TextUtils;
+import androidx.annotation.Nullable;
+
 import android.widget.ImageView;
 
+import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.SizeUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
 import com.bumptech.glide.load.MultiTransformation;
@@ -24,8 +26,6 @@ import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.SimpleTarget;
 import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
-import com.htjy.baselibrary.utils.EmptyUtils;
-import com.htjy.baselibrary.utils.SizeUtils;
 import com.htjy.baselibrary.widget.imageloader.listener.ImageDownloadListener;
 import com.htjy.baselibrary.widget.imageloader.listener.ImageDrawableListener;
 import com.htjy.baselibrary.widget.imageloader.listener.ImageLoadListener;
@@ -416,7 +416,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void saveImage(Context context, Object url, String savePath, String saveFileName, ImageSaveListener listener) {
-        if (!CommonUtils.isSDCardExsit() || EmptyUtils.isEmpty(url)) {
+        if (!CommonUtils.isSDCardExsit() || ObjectUtils.isEmpty(url)) {
             listener.onSaveFail();
             return;
         }

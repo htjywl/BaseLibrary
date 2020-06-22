@@ -7,9 +7,9 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 
+import com.blankj.utilcode.util.SizeUtils;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
-import com.htjy.baselibrary.utils.SizeUtils;
 
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;

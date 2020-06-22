@@ -1,21 +1,17 @@
 package com.example.administrator.baseproject;
 
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.viewpager.widget.ViewPager;
+
 import android.os.Bundle;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.administrator.baseproject.fragment.Test1Fragment;
-import com.example.administrator.baseproject.fragment.Test2Fragment;
+import com.google.android.material.tabs.TabLayout;
 import com.htjy.baselibrary.widget.imageloader.ImageLoaderUtil;
-import com.lyb.besttimer.pluginwidget.utils.FragmentUtil;
-
-import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -63,12 +59,4 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void showFragment(Class<? extends Fragment> fragmentClass) {
-        FragmentUtil.replace(
-                getSupportFragmentManager(),
-                R.id.fl_content,
-                fragmentClass,
-                null,
-                fragmentClass.toString());
-    }
 }

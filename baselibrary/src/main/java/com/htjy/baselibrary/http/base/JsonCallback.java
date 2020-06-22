@@ -1,9 +1,9 @@
 package com.htjy.baselibrary.http.base;
 
+import com.blankj.utilcode.util.ObjectUtils;
+import com.blankj.utilcode.util.ToastUtils;
 import com.htjy.baselibrary.bean.BaseBean;
 import com.htjy.baselibrary.bean.SimpleBaseBean;
-import com.htjy.baselibrary.utils.EmptyUtils;
-import com.htjy.baselibrary.utils.ToastUtils;
 import com.lzy.okgo.callback.AbsCallback;
 import com.lzy.okgo.convert.StringConvert;
 
@@ -145,11 +145,11 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
         Throwable exception = response.getException();
         if (exception instanceof BaseException) {
         } else if (exception instanceof JSONException) {
-            ToastUtils.showShortToast(BaseException.JSON_ERROR_MESSAGE);
+            ToastUtils.showShort(BaseException.JSON_ERROR_MESSAGE);
         } else if (exception instanceof SocketTimeoutException) {
-            ToastUtils.showShortToast(BaseException.NETWORD_TIMEOUT_MESSAGE);
+            ToastUtils.showShort(BaseException.NETWORD_TIMEOUT_MESSAGE);
         } else {
-            ToastUtils.showShortToast(BaseException.NETWORD_ERROR_MESSAGE);
+            ToastUtils.showShort(BaseException.NETWORD_ERROR_MESSAGE);
         }
     }*/
 
@@ -164,18 +164,18 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
         Throwable exception = response.getException();
         if (exception instanceof BaseException) {
             if (showErrorFromServer()) {
-                ToastUtils.showShortToast(((BaseException) exception).getDisplayMessage());
+                ToastUtils.showShort(((BaseException) exception).getDisplayMessage());
             }
         } else if (exception instanceof JSONException) {
             if (showErrorFromServer()) {
-                ToastUtils.showShortToast(BaseException.JSON_ERROR_MESSAGE);
+                ToastUtils.showShort(BaseException.JSON_ERROR_MESSAGE);
             }
         } else {
             if (showErrorFromServer()) {
-                if (exception != null && EmptyUtils.isNotEmpty(exception.getMessage())) {
-                    ToastUtils.showShortToast(exception.getMessage());
+                if (exception != null && ObjectUtils.isNotEmpty(exception.getMessage())) {
+                    ToastUtils.showShort(exception.getMessage());
                 } else {
-                    ToastUtils.showShortToast(BaseException.NETWORD_ERROR_MESSAGE);
+                    ToastUtils.showShort(BaseException.NETWORD_ERROR_MESSAGE);
                 }
             }
 
@@ -188,7 +188,7 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
             T body = response.body();
             if (showSuccessFromServer()) {
                 if (body instanceof BaseBean) {
-                    ToastUtils.showShortToast(((BaseBean) body).getMessage());
+                    ToastUtils.showShort(((BaseBean) body).getMessage());
                 }
             }
         }

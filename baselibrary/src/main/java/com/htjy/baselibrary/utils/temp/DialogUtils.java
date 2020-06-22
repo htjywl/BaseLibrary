@@ -1,4 +1,4 @@
-package com.htjy.baselibrary.utils;
+package com.htjy.baselibrary.utils.temp;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -7,7 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import androidx.core.content.ContextCompat;
 import android.view.View;
 import android.view.ViewParent;
 import android.view.Window;
@@ -15,7 +15,6 @@ import android.view.WindowManager;
 import android.widget.ProgressBar;
 
 import com.htjy.baselibrary.R;
-import com.lyb.besttimer.pluginwidget.view.recyclerview.adapter.AdapterPosClick;
 
 import java.util.List;
 

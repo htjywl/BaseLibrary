@@ -15,7 +15,7 @@
  */
 package com.htjy.baselibrary.http.base;
 
-import com.htjy.baselibrary.utils.EmptyUtils;
+import com.blankj.utilcode.util.ObjectUtils;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.HttpHeaders;
 import com.lzy.okgo.model.HttpMethod;
@@ -86,7 +86,7 @@ public class RxUtils {
         request.headers(headers);
         request.params(params);
 
-        if (!EmptyUtils.isEmpty(sessionId)) {
+        if (!ObjectUtils.isEmpty(sessionId)) {
             request.headers("Cookie", SESSION + "=" + sessionId);
         } else {
             setSessionId();

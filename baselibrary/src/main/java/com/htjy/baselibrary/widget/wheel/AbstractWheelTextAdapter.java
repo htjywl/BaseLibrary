@@ -31,7 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.htjy.baselibrary.utils.LogUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 
 /**

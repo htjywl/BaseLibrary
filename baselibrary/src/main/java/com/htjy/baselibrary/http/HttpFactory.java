@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 
-import com.htjy.baselibrary.utils.DialogAction;
-import com.htjy.baselibrary.utils.DialogUtils;
+import com.htjy.baselibrary.utils.temp.DialogAction;
+import com.htjy.baselibrary.utils.temp.DialogUtils;
 
 
 public class HttpFactory {

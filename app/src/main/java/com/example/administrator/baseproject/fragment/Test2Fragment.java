@@ -1,15 +1,14 @@
 package com.example.administrator.baseproject.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 
+import com.blankj.utilcode.util.LogUtils;
 import com.example.administrator.baseproject.R;
 import com.example.administrator.baseproject.view.Test2View;
 import com.example.administrator.baseproject.presenter.Test2Presenter;
 import com.htjy.baselibrary.base.MvpFragment;
-import com.htjy.baselibrary.utils.LogUtils;
 
 
 public class Test2Fragment extends MvpFragment<Test2View, Test2Presenter> implements Test2View {
