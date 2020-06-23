@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.blankj.utilcode.util.ScreenUtils;
 import com.htjy.baselibrary.R;
-import com.htjy.baselibrary.utils.temp.TimeUtils;
+import com.htjy.baselibrary.utils.temp.HtTimeUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -130,7 +130,7 @@ public class CustomMonthDayDatePickerPopWindow extends PopupWindow {
                     if (listener != null) {
                         //去掉时分秒
                         String string = sdfFrom.format(c.getTime());
-                        Date date = TimeUtils.string2Date(string, sdfFrom);
+                        Date date = HtTimeUtils.string2Date(string, sdfFrom);
                         Calendar calendar = Calendar.getInstance();
                         calendar.setTime(date);
                         listener.dateFinish(calendar);

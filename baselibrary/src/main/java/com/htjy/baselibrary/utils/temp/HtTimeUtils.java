@@ -20,7 +20,7 @@ import java.util.Locale;
  *     desc  : 时间相关工具类
  * </pre>
  */
-public final class TimeUtils {
+public final class HtTimeUtils {
     private final static long minute = 60 * 1000;// 1分钟
     private final static long hour = 60 * minute;// 1小时
     private final static long day = 24 * hour;// 1天
@@ -202,7 +202,7 @@ public final class TimeUtils {
     public static final DateFormat TIME_FORMAT_20 = new SimpleDateFormat("yyyy年M月d日", Locale.getDefault());
 
 
-    private TimeUtils() {
+    private HtTimeUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
     }
 

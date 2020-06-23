@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.htjy.baselibrary.R;
-import com.htjy.baselibrary.utils.temp.TimeUtils;
+import com.htjy.baselibrary.utils.temp.HtTimeUtils;
 import com.htjy.baselibrary.widget.wheel.AbstractWheel;
 import com.htjy.baselibrary.widget.wheel.AbstractWheelTextAdapter;
 import com.htjy.baselibrary.widget.wheel.ArrayWheelAdapter;
@@ -170,8 +170,8 @@ public class CustomMonthDayDatePicker extends LinearLayout {
                     date.set(Calendar.MILLISECOND,0);
                     now_date.set(Calendar.SECOND,0);
                     now_date.set(Calendar.MILLISECOND,0);
-                    String s = TimeUtils.date2String(date.getTime());
-                    String s1 = TimeUtils.date2String(now_date.getTime());
+                    String s = HtTimeUtils.date2String(date.getTime());
+                    String s1 = HtTimeUtils.date2String(now_date.getTime());
 
                     int compareTo = date.compareTo(now_date);
 
