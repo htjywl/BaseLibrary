@@ -227,7 +227,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideRoundTransform(imageView.getContext()));
+        options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));
         //options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));
         Glide.with(imageView.getContext()).load(bytes)
 //                .placeholder(placeholder)
@@ -245,7 +245,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
         /*options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));*/
-        options.transform(new GlideRoundTransform(imageView.getContext()));
+        options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));
         Glide.with(imageView.getContext()).load(url)
 //                .placeholder(placeholder)
 //                .dontAnimate()
@@ -271,13 +271,17 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        listener.onLoadError(e, model, target, isFirstResource);
+                        if (listener != null){
+                            listener.onLoadError(e, model, target, isFirstResource);
+                        }
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        listener.onLoadReady(resource, model, target, dataSource, isFirstResource);
+                        if (listener != null){
+                            listener.onLoadReady(resource, model, target, dataSource, isFirstResource);
+                        }
                         return false;
                     }
                 })

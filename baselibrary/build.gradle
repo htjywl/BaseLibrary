@@ -8,6 +8,7 @@ android {
     compileSdkVersion  rootProject.ext.android["compileSdkVersion"]
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
+
         sourceCompatibility JavaVersion.VERSION_1_8
     }
     dataBinding {
@@ -83,6 +84,7 @@ dependencies {
     //下拉刷新
     api rootProject.ext.dependencies["SmartRefreshLayout"]
     api rootProject.ext.dependencies["SmartRefreshHeader"]
+    api rootProject.ext.dependencies["SmartRefreshFooter"]
     api rootProject.ext.dependencies["calligraphy"]
     //轮播图
     api rootProject.ext.dependencies["bga-banner"]
@@ -128,7 +130,7 @@ def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
 //gradlew clean bintrayUpload
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。gradlew clean
-version = "1.5.14"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "1.5.16"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {
