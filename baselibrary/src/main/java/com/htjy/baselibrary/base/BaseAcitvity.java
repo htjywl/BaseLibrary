@@ -20,7 +20,6 @@ import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.htjy.baselibrary.widget.imageloader.listener.KeyboardChangeListener;
-import com.lzy.okgo.OkGo;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
 
@@ -301,7 +300,6 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
         if (unbinder != null){
             unbinder.unbind();
         }
-        OkGo.getInstance().cancelTag(this);
     }
 
     /**

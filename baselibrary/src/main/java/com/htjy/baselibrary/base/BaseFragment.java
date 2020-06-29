@@ -19,7 +19,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.lzy.okgo.OkGo;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
 
@@ -230,7 +229,6 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        OkGo.getInstance().cancelTag(this);
         if (unbinder != null) {
             unbinder.unbind();
         }

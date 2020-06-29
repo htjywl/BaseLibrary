@@ -48,13 +48,13 @@ public class MainActivity extends AppCompatActivity {
                 showFragment(Test2Fragment.class);
             }
         });*/
-        ImageLoaderUtil.getInstance().loadCircleBorderImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg",R.color.transparent
-        ,iv,20,getResources().getColor(R.color.red));
+        //ImageLoaderUtil.getInstance().loadCircleBorderImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg",R.color.transparent
+        //,iv,20,getResources().getColor(R.color.red));
         tv_test1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageLoaderUtil.getInstance().loadCircleBorderImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg",R.color.transparent
-                        ,iv,20,getResources().getColor(R.color.red));
+               // ImageLoaderUtil.getInstance().loadCircleBorderImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg",R.color.transparent
+              //          ,iv,20,getResources().getColor(R.color.red));
             }
         });
     }
