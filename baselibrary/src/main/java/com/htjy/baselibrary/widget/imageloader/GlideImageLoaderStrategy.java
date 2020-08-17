@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Looper;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -77,6 +76,12 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         Glide.with(context)
                 .load(model)
                 .apply(requestOptions)
+                .error(
+                        Glide.with(context)
+                                .load(model)
+                                .apply(RequestOptions.bitmapTransform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(corner_px)))
+                                        .placeholder(android.R.color.transparent).dontAnimate().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -86,6 +91,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         RequestOptions options = new RequestOptions().placeholder(placeholder).diskCacheStrategy(DiskCacheStrategy.ALL).transforms(new CenterCrop(), new CircleCrop());
         Glide.with(imageView.getContext()).load(model)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(model)
+                                .apply(new RequestOptions().placeholder(placeholder).transforms(new CenterCrop(), new CircleCrop()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -104,6 +113,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .placeholder(imageView.getDrawable())
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(imageView.getDrawable()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -120,6 +133,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .transform(new GlideCircleTransform(imageView.getContext()))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).dontAnimate().circleCrop().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -210,6 +227,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .transform(new GlideCircleTransform(imageView.getContext(),borderWidth,borderColor))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).dontAnimate().transform(new GlideCircleTransform(borderWidth, borderColor)).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -252,6 +273,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .transform(new GlideRoundTransform(imageView.getContext(),dp))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).dontAnimate().transform(new RoundedCorners(SizeUtils.dp2px(dp))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -298,6 +323,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .placeholder(imageView.getDrawable())
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext().getApplicationContext()).load(url)
+                                .apply(new RequestOptions().placeholder(imageView.getDrawable()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -553,6 +582,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //            }
 //        })
                 .apply(options)
+                .error(
+                        Glide.with(ctx).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .listener(listener)
                 .into(imageView);
     }
