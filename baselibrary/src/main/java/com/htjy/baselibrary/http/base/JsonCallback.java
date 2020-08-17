@@ -1,6 +1,7 @@
 package com.htjy.baselibrary.http.base;
 
 import com.htjy.baselibrary.bean.BaseBean;
+import com.htjy.baselibrary.bean.JavaBaseBean;
 import com.htjy.baselibrary.bean.SimpleBaseBean;
 import com.htjy.baselibrary.utils.EmptyUtils;
 import com.htjy.baselibrary.utils.ToastUtils;
@@ -71,7 +72,6 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
                 default:
                     throw new BaseException(simpleResponse.code, simpleResponse.msg);
             }
-
         } else if (rawType == BaseBean.class) {
             JSONObject jObj = null;
             jObj = new JSONObject(body);
@@ -100,7 +100,25 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
                 //这个地方是有返回数据的时候,根据返回错误码的不同做处理
                 throw new BaseException(code, message);
             }
-
+        } else if (rawType == JavaBaseBean.class) {
+            JSONObject jObj = null;
+            jObj = new JSONObject(body);
+            String status = BaseException.JSON_ERROR;
+            if (jObj.has("status")) {
+                status = jObj.getString("status");
+            }
+            if (status.equals(BaseException.STATUS_OK)) {
+                JavaBaseBean data = GsonConvert.fromJson(body, type);
+                afterConvertSuccess((T) data);
+                return (T) data;
+            } else {
+                String error = BaseException.JSON_ERROR_MESSAGE;
+                if (jObj.has("error")) {
+                    error = jObj.getString("error");
+                }
+                //这个地方是有返回数据的时候,根据返回错误码的不同做处理
+                throw new BaseException(status, error);
+            }
         } else {
             // response.close();
             throw new BaseException(BaseException.JSON_ERROR, BaseException.JSON_ERROR_MESSAGE);
