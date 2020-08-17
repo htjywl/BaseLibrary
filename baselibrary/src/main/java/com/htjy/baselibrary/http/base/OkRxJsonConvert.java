@@ -17,6 +17,7 @@ package com.htjy.baselibrary.http.base;
 
 import com.google.gson.stream.JsonReader;
 import com.htjy.baselibrary.bean.BaseBean;
+import com.htjy.baselibrary.bean.JavaBaseBean;
 import com.htjy.baselibrary.bean.SimpleBaseBean;
 import com.lzy.okgo.convert.Converter;
 
@@ -33,10 +34,8 @@ import okhttp3.ResponseBody;
 /**
  * ================================================
  * ?    ??jeasonlzy?????Github???https://github.com/jeasonlzy
- * ?    ??1.0
- * ?????16/9/11
- * ?    ??
- * ?????
+ * 
+ *  https://github.com/jeasonlzy/okhttp-OkGo/wiki/JsonCallback
  * ================================================
  */
 public class OkRxJsonConvert<T> implements Converter<T> {
@@ -55,25 +54,10 @@ public class OkRxJsonConvert<T> implements Converter<T> {
         this.clazz = clazz;
     }
 
-    /**
-     * ?????????????ui?????
-     * ???????????? response ?????onSuccess??????????
-     * ????????????????????,????????,??????????,??????????
-     */
     @Override
     public T convertResponse(Response response) throws Throwable {
-
-        // ?????????????????????????????????????????
-        // ?????????????????????????????????????????
-        // ?????????????????????????????????????????
-
-        // ???????????????????????????: https://github.com/jeasonlzy/okhttp-OkGo/wiki/JsonCallback
-        // ???????????????????????????: https://github.com/jeasonlzy/okhttp-OkGo/wiki/JsonCallback
-        // ???????????????????????????: https://github.com/jeasonlzy/okhttp-OkGo/wiki/JsonCallback
-
         if (type == null) {
             if (clazz == null) {
-                // ????????????????????????????????????????????
                 Type genType = getClass().getGenericSuperclass();
                 type = ((ParameterizedType) genType).getActualTypeArguments()[0];
             } else {
@@ -91,9 +75,13 @@ public class OkRxJsonConvert<T> implements Converter<T> {
     }
 
     private T parseClass(Response response, Class<?> rawType) throws Exception {
-        if (rawType == null) return null;
+        if (rawType == null) {
+            return null;
+        }
         ResponseBody body = response.body();
-        if (body == null) return null;
+        if (body == null) {
+            return null;
+        }
         JsonReader jsonReader = new JsonReader(body.charStream());
 
         if (rawType == String.class) {
@@ -113,59 +101,69 @@ public class OkRxJsonConvert<T> implements Converter<T> {
     }
 
     private T parseType(Response response, Type type) throws Exception {
-        if (type == null) return null;
+        if (type == null) {
+            return null;
+        }
         ResponseBody body = response.body();
-        if (body == null) return null;
+        if (body == null) {
+            return null;
+        }
         JsonReader jsonReader = new JsonReader(body.charStream());
 
-        // ??????? new JsonCallback<??JavaBean>(this)
         T t = GsonConvert.fromJson(jsonReader, type);
         response.close();
         return t;
     }
 
     private T parseParameterizedType(Response response, ParameterizedType type) throws Exception {
-        if (type == null) return null;
+        if (type == null) {
+            return null;
+        }
         ResponseBody body = response.body();
-        if (body == null) return null;
+        if (body == null) {
+            return null;
+        }
         JsonReader jsonReader = new JsonReader(body.charStream());
 
-        Type rawType = type.getRawType();                     // ???????
-        Type typeArgument = type.getActualTypeArguments()[0]; // ?????
-        if (rawType != BaseBean.class) {
-            // ??????? new JsonCallback<??BaseBean<??JavaBean>>(this)
+        Type rawType = type.getRawType();
+        Type typeArgument = type.getActualTypeArguments()[0];
+
+        if (typeArgument == Void.class) {
+            SimpleBaseBean simpleResponse = GsonConvert.fromJson(jsonReader, SimpleBaseBean.class);
+            switch (simpleResponse.code) {
+                case BaseException.STATUS_OK:
+                    if (simpleResponse.toLzyResponse() != null) {
+                        return (T) simpleResponse.toLzyResponse();
+                    }
+                default:
+                    throw new BaseException(simpleResponse.code, simpleResponse.msg);
+            }
+        } else if (rawType == BaseBean.class) {
+            BaseBean lzyResponse = GsonConvert.fromJson(jsonReader, type);
+            response.close();
+            String code = lzyResponse.getCode();
+            String message = lzyResponse.getMessage();
+            if (code.equals(BaseException.STATUS_OK)) {
+                return (T) lzyResponse;
+            } else {
+                throw new BaseException(code, message);
+            }
+        } else if (rawType == JavaBaseBean.class) {
+            JavaBaseBean lzyResponse = GsonConvert.fromJson(jsonReader, type);
+            response.close();
+            String code = lzyResponse.getStatus();
+            if (code.equals(BaseException.STATUS_OK)) {
+                return (T) lzyResponse;
+            } else {
+                String message = lzyResponse.getError();
+                throw new BaseException(code, message);
+            }
+        } else {
             T t = GsonConvert.fromJson(jsonReader, type);
             response.close();
             return t;
-        } else {
-            if (typeArgument == Void.class) {
-                //?????,????data???????  new DialogCallback<BaseBean<Void>>(this)  ??????????,???String??)
-                SimpleBaseBean simpleResponse = GsonConvert.fromJson(jsonReader, SimpleBaseBean.class);
-                switch (simpleResponse.code) {
-                    case BaseException.STATUS_OK:
-                        if (simpleResponse.toLzyResponse() != null) {
-                            return (T) simpleResponse.toLzyResponse();
-                        }
-               /* case BaseException.NOT_LOGIN:
-                    throw new BaseException(BaseException.NOT_LOGIN, BaseException.NOT_LOGIN_MESSAGE);*/
-                    default:
-                        throw new BaseException(simpleResponse.code, simpleResponse.msg);
-                }
-            } else {
-                // ??????? new JsonCallback<LzyResponse<??JavaBean>>(this)
-                BaseBean lzyResponse = GsonConvert.fromJson(jsonReader, type);
-                response.close();
-                String code = lzyResponse.getCode();
-                String message = lzyResponse.getMessage();
-                //???0?????
-                //????????????????????????????????????????
-                if (code.equals(BaseException.STATUS_OK)) {
-                    return (T) lzyResponse;
-                } else {
-                    //?????????????,?????????????
-                    throw new BaseException(code, message);
-                }
-            }
         }
     }
+
 }
+
