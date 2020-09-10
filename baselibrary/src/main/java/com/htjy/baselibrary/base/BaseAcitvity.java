@@ -91,11 +91,18 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
         }
         //viewMain = (ViewGroup)findViewById(R.id.loadingLayout);
         //findViewById(R.id.loadingLayout);
+        initBeforeInitView();
         initViews(savedInstanceState);
         initData();
         initListener();
         initStateLayout();
     }
+
+    protected void initBeforeInitView() {
+
+    }
+
+
 
   /*  @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {

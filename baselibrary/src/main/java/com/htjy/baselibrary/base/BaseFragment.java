@@ -148,7 +148,6 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
 
 
         initStateLayout(inflateView);
-        initViews(savedInstanceState);
         return inflateView;
 
     }
@@ -212,8 +211,19 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
 
 
     protected void afterInflateView(Bundle savedInstanceState) {
+        initBeforeInitView();
+        initViews(savedInstanceState);
         initFragmentData();
         initListener();
+    }
+
+    protected void initBeforeInitView() {
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     /**
