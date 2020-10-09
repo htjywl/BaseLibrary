@@ -14,9 +14,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.ToastUtils;
 import com.htjy.baselibrary.utils.FragmentUtils;
 import com.htjy.baselibrary.utils.KeyboardUtils;
-import com.htjy.baselibrary.utils.ToastUtils;
 import com.htjy.baselibrary.widget.imageloader.listener.KeyboardChangeListener;
 import com.lzy.okgo.OkGo;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -267,22 +267,22 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
     @Override
     public void toast(CharSequence s) {
-        ToastUtils.showShortToast(s);
+       ToastUtils.showShort(s);
     }
 
     @Override
     public void toast(int id) {
-        ToastUtils.showShortToast(id);
+        ToastUtils.showShort(id);
     }
 
     @Override
     public void toastLong(CharSequence s) {
-        ToastUtils.showLongToast(s);
+       ToastUtils.showLong(s);
     }
 
     @Override
     public void toastLong(int id) {
-        ToastUtils.showLongToast(id);
+        ToastUtils.showLong(id);
     }
 
     @Override

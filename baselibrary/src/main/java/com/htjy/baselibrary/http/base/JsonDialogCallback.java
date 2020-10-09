@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.htjy.baselibrary.http.HttpFactory;
 import com.htjy.baselibrary.utils.DialogUtils;
 import com.lzy.okgo.model.Response;
@@ -55,7 +56,7 @@ public abstract class JsonDialogCallback<T> extends JsonCallback<T> {
         super.onStart(request);
         //网络请求前显示对话框
         Context context = mWeakRefrence.get();
-        if (dialog != null && showProgressDialog && !dialog.isShowing() && context != null && !((Activity) context).isFinishing()) {
+        if (dialog != null && showProgressDialog && !dialog.isShowing() && ActivityUtils.isActivityAlive(context)) {
             dialog.show();
         }
     }
@@ -65,7 +66,7 @@ public abstract class JsonDialogCallback<T> extends JsonCallback<T> {
     public void onFinish() {
         super.onFinish();
         //网络请求结束后关闭对话框
-        if (dialog != null && dialog.isShowing() && !((Activity) mWeakRefrence.get()).isFinishing()) {
+        if (dialog != null && dialog.isShowing() && ActivityUtils.isActivityAlive(mWeakRefrence.get())) {
             dialog.dismiss();
         }
     }
@@ -77,7 +78,7 @@ public abstract class JsonDialogCallback<T> extends JsonCallback<T> {
      * @return
      */
     public Dialog getProgressDialog(Context context) {
-        if (context != null && dialog == null) {
+        if (context != null && dialog == null && ActivityUtils.isActivityAlive(context)) {
             dialog = new DialogUtils.DefaultProgressDialog(context);
             /*if (isCartoonDialog)
                 dialog = new DialogUtils.CustomProgressDialog(activity);
