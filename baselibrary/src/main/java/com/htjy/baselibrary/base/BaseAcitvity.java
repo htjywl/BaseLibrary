@@ -329,7 +329,6 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
     @Override
     protected void onPause() {
         super.onPause();
-        KeyboardUtils.hideSoftInput(this);
     }
 
     @Override
