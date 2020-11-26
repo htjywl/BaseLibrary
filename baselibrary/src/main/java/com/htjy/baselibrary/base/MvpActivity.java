@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
  * Created by hankkin on 2017/3/29.
  */
 
-public abstract class MvpActivity<V, P extends BasePresent<V>> extends BaseAcitvity {
+public abstract class MvpActivity<V, P extends BasePresent<V>> extends BaseActivity {
 
     protected P presenter;
 

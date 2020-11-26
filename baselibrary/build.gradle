@@ -3,6 +3,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
 android {
     compileSdkVersion  rootProject.ext.android["compileSdkVersion"]
 
@@ -106,6 +109,15 @@ dependencies {
     api 'com.facebook.stetho:stetho:1.5.0'
     api 'com.facebook.stetho:stetho-okhttp3:1.5.0'
     api 'top.zibin:Luban:1.1.8'
+    //lifecycle
+    api 'androidx.lifecycle:lifecycle-runtime:2.2.0'
+    api 'androidx.lifecycle:lifecycle-common-java8:2.2.0'
+    api 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+    // viewModel
+    api "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    api "androidx.fragment:fragment-ktx:1.2.5"
+    // liveData
+    api "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
 }
 
 // 定义两个链接，下面会用到。
@@ -113,7 +125,7 @@ def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
 //gradlew clean bintrayUpload
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。gradlew clean
-version = "2.0.9"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "2.1.0"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {

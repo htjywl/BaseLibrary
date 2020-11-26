@@ -1,61 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+<layout>
 
+    <data>
 
-    <LinearLayout
+        <variable
+            name="viewModel"
+            type="com.example.administrator.baseproject.MainViewModel" />
+
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <TextView
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-            android:id="@+id/tv_test1"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/black"
-            android:text="test1"
-            android:layout_width="100dp"
-            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+            <TextView
+
+                android:id="@+id/tv_test1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/black"
+                android:text="test1"
+                android:layout_width="100dp"
+                android:layout_height="50dp" />
+
+            <TextView
+                android:id="@+id/tv_test2"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:background="@color/black"
+                android:text="test2"
+                android:layout_width="100dp"
+                android:layout_height="50dp" />
+        </LinearLayout>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"/>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </androidx.viewpager.widget.ViewPager>
+
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"/>
+
+
 
         <TextView
-            android:id="@+id/tv_test2"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/black"
-            android:text="test2"
-            android:layout_width="100dp"
-            android:layout_height="50dp" />
+            android:id="@+id/tv_test"
+            android:textColor="@color/black"
+            android:textSize="100dp"
+            android:textStyle="bold"
+            android:text="@{viewModel.loginResult.test1}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
     </LinearLayout>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"/>
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-    </androidx.viewpager.widget.ViewPager>
-
-    <FrameLayout
-        android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/iv_head"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
-
-
-</LinearLayout>
+</layout>

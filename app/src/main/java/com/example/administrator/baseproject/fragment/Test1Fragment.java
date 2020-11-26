@@ -4,21 +4,24 @@ import android.os.Bundle;
 import android.view.View;
 
 
+import androidx.databinding.ViewDataBinding;
+
 import com.blankj.utilcode.util.LogUtils;
+import com.example.administrator.FragmentViewModel;
 import com.example.administrator.baseproject.R;
 import com.example.administrator.baseproject.view.Test1View;
 import com.example.administrator.baseproject.presenter.Test1Presenter;
 import com.htjy.baselibrary.base.MvpFragment;
+import com.htjy.device.fangke.base.ViewModelFragment;
 
 
-public class Test1Fragment extends MvpFragment<Test1View, Test1Presenter> implements Test1View {
+public class Test1Fragment extends ViewModelFragment<ViewDataBinding, FragmentViewModel> {
     private static final String TAG = "Test1Fragment";
 
     @Override
-    public Test1Presenter initPresenter() {
-        return new Test1Presenter();
+    protected boolean isBinding() {
+        return true;
     }
-
 
     @Override
     protected void initViews(Bundle savedInstanceState) {

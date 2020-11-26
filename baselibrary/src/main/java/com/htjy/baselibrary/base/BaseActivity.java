@@ -17,7 +17,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.blankj.utilcode.util.FragmentUtils;
-import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.htjy.baselibrary.widget.imageloader.listener.KeyboardChangeListener;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
@@ -31,7 +30,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseView {
+public abstract class BaseActivity extends RxAppCompatActivity implements BaseView {
 
 
     protected Activity activity;
@@ -45,14 +44,14 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
     /**
      * 是否使用databinding
+     *
      * @return
      */
-    protected boolean isBinding(){
+    protected boolean isBinding() {
         return false;
     }
 
-    protected void setContentViewByBinding(int layoutId){
-
+    protected void setContentViewByBinding(int layoutId) {
     }
 
     protected <T extends ViewDataBinding> T getContentViewByBinding(int layoutId) {
@@ -72,17 +71,17 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
             getWindow().setEnterTransition(explode);
         }*/
         if (getLayoutId() != 0) {
-            if (!isBinding()){
+            if (!isBinding()) {
                 setContentView(getLayoutId());
-            }else{
+            } else {
                 setContentViewByBinding(getLayoutId());
             }
 
         }
         initBind();
-        hasBus = haveBus() ;
+        hasBus = haveBus();
 
-        if (haveBus()){
+        if (haveBus()) {
             EventBus.getDefault().register(this);
         }
         hasListenerForKey = haveListenerForKey();
@@ -174,7 +173,7 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
         return 0;
     }
 
-    protected abstract void initViews(Bundle savedInstanceState);
+    protected abstract void initViews(@Nullable Bundle savedInstanceState);
 
     protected abstract void initStateLayout();
 
@@ -202,10 +201,11 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
 
     /**
      * 获取返回主页面的事件
+     *
      * @param mainAction 主页面的action
      * @return
      */
-    public Intent getToMainIntent(String mainAction){
+    public Intent getToMainIntent(String mainAction) {
         Intent intent = new Intent(mainAction);
         intent.setPackage(getPackageName());
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -257,7 +257,7 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
         if (progress == null) {
             progress = new ProgressDialog(activity);
         }
-        if (!isFinishing() && !progress.isShowing()){
+        if (!isFinishing() && !progress.isShowing()) {
             progress.show();
         }
     }
@@ -304,7 +304,7 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
             removeListenerToRootView();
         }
 
-        if (unbinder != null){
+        if (unbinder != null) {
             unbinder.unbind();
         }
     }
@@ -334,8 +334,8 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (isDispatchActivityResultToFragment()){
-            dispatchRequestResult(requestCode,resultCode,data);
+        if (isDispatchActivityResultToFragment()) {
+            dispatchRequestResult(requestCode, resultCode, data);
         }
     }
 
@@ -344,12 +344,14 @@ public abstract class BaseAcitvity extends RxAppCompatActivity implements BaseVi
         for (FragmentUtils.FragmentNode fragmentNode : fragmentNodes) {
             Fragment fragment = fragmentNode.getFragment();
             if (fragment instanceof BaseFragment) {
-                fragment.onActivityResult(requestCode,resultCode,data);
+                fragment.onActivityResult(requestCode, resultCode, data);
             }
         }
     }
 
-    public boolean isDispatchActivityResultToFragment(){
+    public boolean isDispatchActivityResultToFragment() {
         return false;
     }
+
+
 }
