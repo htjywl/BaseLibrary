@@ -30,7 +30,7 @@ import kotlin.collections.ArrayList
  *
  * 一般建议在自定义 Application 类里初始化。也可以在主 Activity 里。
  */
-class BaseLibraryApplication : MultiDexApplication(), ViewModelStoreOwner {
+open class BaseLibraryApplication : MultiDexApplication(), ViewModelStoreOwner {
     private lateinit var activityList: ArrayList<Activity>
 //    var daoInstant: DaoSession? = null
 
