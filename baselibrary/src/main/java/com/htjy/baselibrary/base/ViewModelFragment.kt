@@ -1,4 +1,4 @@
-package com.htjy.device.fangke.base
+package com.htjy.baselibrary.base
 
 import android.os.Bundle
 import android.view.View
