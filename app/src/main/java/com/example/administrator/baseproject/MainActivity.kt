@@ -9,6 +9,7 @@ import androidx.viewpager.widget.ViewPager
 import com.example.administrator.baseproject.databinding.ActivityMainBinding
 import com.google.android.material.tabs.TabLayout
 import com.htjy.baselibrary.base.ViewModelActivity
+import com.htjy.baselibrary.widget.imageloader.ImageLoaderUtil
 
 class MainActivity : ViewModelActivity<ActivityMainBinding,MainViewModel>() {
 
@@ -51,8 +52,9 @@ class MainActivity : ViewModelActivity<ActivityMainBinding,MainViewModel>() {
                 showFragment(Test2Fragment.class);
             }
         });*/
-        //ImageLoaderUtil.getInstance().loadCircleBorderImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg",R.color.transparent
-        //,iv,20,getResources().getColor(R.color.red));
+        ImageLoaderUtil.getInstance().loadCenterCropWithCorner(this,"https://iknow-pic.cdn.bcebos.com/9c16fdfaaf51f3de9ba8ee1194eef01f3a2979a8"
+                ,iv,R.color.red
+        ,20);
         tv_test1.setOnClickListener {
             // ImageLoaderUtil.getInstance().loadCircleBorderImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg",R.color.transparent
             //          ,iv,20,getResources().getColor(R.color.red));

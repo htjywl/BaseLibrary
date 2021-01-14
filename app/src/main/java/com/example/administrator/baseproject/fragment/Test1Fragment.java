@@ -12,7 +12,7 @@ import com.example.administrator.baseproject.R;
 import com.example.administrator.baseproject.view.Test1View;
 import com.example.administrator.baseproject.presenter.Test1Presenter;
 import com.htjy.baselibrary.base.MvpFragment;
-import com.htjy.device.fangke.base.ViewModelFragment;
+import com.htjy.baselibrary.base.ViewModelFragment;
 
 
 public class Test1Fragment extends ViewModelFragment<ViewDataBinding, FragmentViewModel> {

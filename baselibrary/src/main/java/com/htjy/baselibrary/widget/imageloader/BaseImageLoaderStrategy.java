@@ -25,7 +25,7 @@ public interface BaseImageLoaderStrategy {
     void loadImageWithAppCxt(Object url, ImageView imageView);
 
     void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px);
-    
+    void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int placeholder, int corner_px);
 
     void loadImage(Object url, int placeholder, ImageView imageView);
 
@@ -73,4 +73,6 @@ public interface BaseImageLoaderStrategy {
     void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp, ImageLoadListener listener);
 
     void loadDrawable(Context context, Object url, ImageDrawableListener listener);
+
+
 }

@@ -56,6 +56,12 @@ public class ImageLoaderUtil {
     public void loadImage(Object url, int placeholder, ImageView imageView) {
         mStrategy.loadImage(imageView.getContext(), url, placeholder, imageView);
     }
+    public void loadImage(Object url, ImageView imageView) {
+        mStrategy.loadImage(url, imageView);
+    }
+    public void loadImageWithAppCxt(Object url, ImageView imageView) {
+        mStrategy.loadImageWithAppCxt(url, imageView);
+    }
 
     public void loadImageWithListener(Object url, int placeholder, ImageView imageView, ImageLoadListener listener) {
         mStrategy.loadImageWithListener(url, placeholder, imageView, listener);
@@ -68,16 +74,21 @@ public class ImageLoaderUtil {
     public void loadCircleImage(Object url, int placeholder, ImageView imageView) {
         mStrategy.loadCircleImage(url, placeholder, imageView);
     }
+
     public void loadCentercropCircleImage(Object url, int placeholder, ImageView imageView) {
         mStrategy.loadCentercropCircleImage(url, placeholder, imageView);
     }
 
     public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView) {
         mStrategy.loadCircleImage(bitmap, placeholder, imageView);
-    } public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView,ImageLoadListener listener) {
-        mStrategy.loadCircleImage(bitmap, placeholder, imageView,listener);
-    }public void loadCircleImage(Object url, int placeholder, ImageView imageView,ImageLoadListener listener) {
-        mStrategy.loadCircleImage(url, placeholder, imageView,listener);
+    }
+
+    public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView, ImageLoadListener listener) {
+        mStrategy.loadCircleImage(bitmap, placeholder, imageView, listener);
+    }
+
+    public void loadCircleImage(Object url, int placeholder, ImageView imageView, ImageLoadListener listener) {
+        mStrategy.loadCircleImage(url, placeholder, imageView, listener);
     }
 
     public void loadCircleBorderImage(Object url, int placeholder, ImageView imageView, float borderWidth, int borderColor) {
@@ -86,13 +97,8 @@ public class ImageLoaderUtil {
 
 
 
-    public void loadImage(Object url, ImageView imageView) {
-        mStrategy.loadImage(url, imageView);
-    }
 
-    public void loadImageWithAppCxt(Object url, ImageView imageView) {
-        mStrategy.loadImageWithAppCxt(url, imageView);
-    }
+
 
 //    public void loadImageWithProgress(Object url, ImageView imageView, ProgressLoadListener listener) {
 //        mStrategy.loadImageWithProgress(url, imageView, listener);
@@ -120,6 +126,10 @@ public class ImageLoaderUtil {
 
     public void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px) {
         mStrategy.loadCenterCropWithCorner(context, model, imageView, corner_px);
+    }
+
+    public void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int placeholder, int corner_px) {
+        mStrategy.loadCenterCropWithCorner(context, model, imageView,placeholder, corner_px);
     }
 
     /**

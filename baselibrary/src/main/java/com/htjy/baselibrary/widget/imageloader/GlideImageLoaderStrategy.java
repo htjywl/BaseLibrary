@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Looper;
+
 import androidx.annotation.Nullable;
 
 import android.widget.ImageView;
@@ -70,6 +71,22 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
                 new CenterCrop(), new RoundedCorners(corner_px)));
 
         requestOptions.placeholder(android.R.color.transparent);
+        requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
+        requestOptions.dontAnimate();
+
+
+        Glide.with(context)
+                .load(model)
+                .apply(requestOptions)
+                .into(imageView);
+    }
+
+    @Override
+    public void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int placeholder, int corner_px) {
+        RequestOptions requestOptions = RequestOptions.bitmapTransform(new MultiTransformation<>(
+                new CenterCrop(), new RoundedCorners(corner_px)));
+
+        requestOptions.placeholder(placeholder);
         requestOptions.diskCacheStrategy(DiskCacheStrategy.ALL);
         requestOptions.dontAnimate();
 
@@ -203,7 +220,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideCircleTransform( borderWidth, borderColor));
+        options.transform(new GlideCircleTransform(borderWidth, borderColor));
         Glide.with(imageView.getContext()).load(url)
 //                .placeholder(placeholder)
 //                .dontAnimate()
