@@ -1,5 +1,6 @@
 package com.htjy.baselibrary.widget.imageloader;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -7,11 +8,11 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Looper;
+import android.widget.ImageView;
 
 import androidx.annotation.Nullable;
 
-import android.widget.ImageView;
-
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ObjectUtils;
 import com.blankj.utilcode.util.SizeUtils;
 import com.bumptech.glide.Glide;
@@ -52,21 +53,33 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadImage(Object url, int placeholder, ImageView imageView) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         loadNormal(imageView.getContext(), url, placeholder, imageView);
     }
 
     @Override
     public void loadImageWithListener(Object url, int placeholder, ImageView imageView, ImageLoadListener listener) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         loadNormal(imageView.getContext(), url, placeholder, imageView, listener);
     }
 
     @Override
     public void loadImage(Context context, Object url, int placeholder, ImageView imageView) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         loadNormal(context, url, placeholder, imageView);
     }
 
     @Override
     public void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions requestOptions = RequestOptions.bitmapTransform(new MultiTransformation<>(
                 new CenterCrop(), new RoundedCorners(corner_px)));
 
@@ -78,11 +91,20 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         Glide.with(context)
                 .load(model)
                 .apply(requestOptions)
+                .error(
+                        Glide.with(context)
+                                .load(model)
+                                .apply(RequestOptions.bitmapTransform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(corner_px)))
+                                        .placeholder(android.R.color.transparent).dontAnimate().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
     @Override
     public void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int placeholder, int corner_px) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions requestOptions = RequestOptions.bitmapTransform(new MultiTransformation<>(
                 new CenterCrop(), new RoundedCorners(corner_px)));
 
@@ -94,15 +116,28 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         Glide.with(context)
                 .load(model)
                 .apply(requestOptions)
+                .error(
+                        Glide.with(context)
+                                .load(model)
+                                .apply(RequestOptions.bitmapTransform(new MultiTransformation<>(new CenterCrop(), new RoundedCorners(corner_px)))
+                                        .placeholder(placeholder).dontAnimate().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
 
     @Override
     public void loadCentercropCircleImage(Object model, int placeholder, ImageView imageView) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions().placeholder(placeholder).diskCacheStrategy(DiskCacheStrategy.ALL).transforms(new CenterCrop(), new CircleCrop());
         Glide.with(imageView.getContext()).load(model)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(model)
+                                .apply(new RequestOptions().placeholder(placeholder).transforms(new CenterCrop(), new CircleCrop()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -114,6 +149,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
      */
     @Override
     public void loadImage(Object url, ImageView imageView) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(imageView.getDrawable());
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -121,11 +159,18 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .placeholder(imageView.getDrawable())
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(imageView.getDrawable()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
     @Override
     public void loadCircleImage(Object url, int placeholder, ImageView imageView) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -137,11 +182,18 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .transform(new GlideCircleTransform(imageView.getContext()))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).dontAnimate().circleCrop().skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
     @Override
     public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -158,6 +210,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView, ImageLoadListener listener) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -187,6 +242,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadCircleImage(Object url, int placeholder, ImageView imageView, ImageLoadListener listener) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -216,6 +274,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadCircleBorderImage(Object url, int placeholder, ImageView imageView, float borderWidth, int borderColor) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -227,11 +288,18 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .transform(new GlideCircleTransform(imageView.getContext(),borderWidth,borderColor))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).dontAnimate().transform(new GlideCircleTransform(borderWidth, borderColor)).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
     @Override
     public void loadCornerImage(Bitmap bitmap, int placeholder, ImageView imageView, int dp) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         byte[] bytes = new byte[0];
         if (bitmap != null) {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -244,7 +312,7 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
-        options.transform(new GlideRoundTransform(imageView.getContext()));
+        options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));
         //options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));
         Glide.with(imageView.getContext()).load(bytes)
 //                .placeholder(placeholder)
@@ -257,23 +325,33 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
         options.dontAnimate();
         /*options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));*/
-        options.transform(new GlideRoundTransform(imageView.getContext()));
+        options.transform(new RoundedCorners(SizeUtils.dp2px(dp)));
         Glide.with(imageView.getContext()).load(url)
 //                .placeholder(placeholder)
 //                .dontAnimate()
 //                .transform(new GlideRoundTransform(imageView.getContext(),dp))
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext()).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).dontAnimate().transform(new RoundedCorners(SizeUtils.dp2px(dp))).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
     @Override
     public void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp, ImageLoadListener listener) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(placeholder);
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -288,13 +366,17 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        listener.onLoadError(e, model, target, isFirstResource);
+                        if (listener != null) {
+                            listener.onLoadError(e, model, target, isFirstResource);
+                        }
                         return false;
                     }
 
                     @Override
                     public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        listener.onLoadReady(resource, model, target, dataSource, isFirstResource);
+                        if (listener != null) {
+                            listener.onLoadReady(resource, model, target, dataSource, isFirstResource);
+                        }
                         return false;
                     }
                 })
@@ -304,6 +386,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 
     @Override
     public void loadImageWithAppCxt(Object url, ImageView imageView) {
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         RequestOptions options = new RequestOptions();
         options.placeholder(imageView.getDrawable());
         options.diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -311,6 +396,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //                .placeholder(imageView.getDrawable())
 //                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .apply(options)
+                .error(
+                        Glide.with(imageView.getContext().getApplicationContext()).load(url)
+                                .apply(new RequestOptions().placeholder(imageView.getDrawable()).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .into(imageView);
     }
 
@@ -533,7 +622,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
          https://github.com/bumptech/glide/issues/600
          modified by xuqiang
          */
-
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         //去掉动画 解决与CircleImageView冲突的问题 这个只是其中的一个解决方案
         //使用SOURCE 图片load结束再显示而不是先显示缩略图再显示最终的图片（导致图片大小不一致变化）
         final long startTime = System.currentTimeMillis();
@@ -566,6 +657,10 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
 //            }
 //        })
                 .apply(options)
+                .error(
+                        Glide.with(ctx).load(url)
+                                .apply(new RequestOptions().placeholder(placeholder).skipMemoryCache(true).diskCacheStrategy(DiskCacheStrategy.NONE))
+                )
                 .listener(listener)
                 .into(imageView);
     }
@@ -581,7 +676,9 @@ public class GlideImageLoaderStrategy implements BaseImageLoaderStrategy {
          https://github.com/bumptech/glide/issues/600
          modified by xuqiang
          */
-
+        if (imageView == null || !ActivityUtils.isActivityAlive(imageView.getContext())) {
+            return;
+        }
         //去掉动画 解决与CircleImageView冲突的问题 这个只是其中的一个解决方案
         //使用SOURCE 图片load结束再显示而不是先显示缩略图再显示最终的图片（导致图片大小不一致变化）
         final long startTime = System.currentTimeMillis();

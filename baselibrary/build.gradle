@@ -125,7 +125,7 @@ def siteUrl = 'https://coding.net/u/htjywl/p/BaseProject' // 项目主页。
 def gitUrl = 'https://git.coding.net/htjywl/BaseProject.git' // Git仓库的url。
 //gradlew clean bintrayUpload
 group = "com.htjy.dwm"// 唯一包名,比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的com.ansen.http就是这里配置的。gradlew clean
-version = "2.1.4"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
+version = "2.1.5"//项目引用的版本号，比如compile 'com.ansen.http:okhttpencapsulation:1.0.1'中的1.0.1就是这里配置的。
 
 install {
     repositories.mavenInstaller {
@@ -133,7 +133,7 @@ install {
         pom {
             project {
                 packaging 'aar'
-                // 项目描述，复制我的话，这里需要修改。
+                // 项目描述，复制我的话， 这里需要修改。
                 name 'baselibrary'// 可选，项目名称。
                 description 'base library for HTJY Android Project'// 可选，项目描述。
                 url siteUrl // 项目主页，这里是引用上面定义好。
