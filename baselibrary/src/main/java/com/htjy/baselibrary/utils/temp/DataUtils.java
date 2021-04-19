@@ -1,6 +1,10 @@
 package com.htjy.baselibrary.utils.temp;
 
+import android.graphics.Bitmap;
 import android.util.Base64;
+
+import com.blankj.utilcode.util.ImageUtils;
+import com.blankj.utilcode.util.LogUtils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -65,6 +69,25 @@ public class DataUtils {
                     e.printStackTrace();
                 }
             }
+        }
+        return result;
+    }
+
+    public static String bitmap2Base64(Bitmap bitmap, int i) {
+        String result = null;
+        if (bitmap != null) {
+            byte[] bitmapBytes = ImageUtils.bitmap2Bytes(bitmap, Bitmap.CompressFormat.PNG, i);
+            LogUtils.d("DWM", "covert size:" + bitmapBytes.length / 1024);
+            result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
+        }
+        return result;
+    }
+
+    public static String bitmap2Base64(Bitmap bitmap) {
+        String result = null;
+        if (bitmap != null) {
+            byte[] bitmapBytes = ImageUtils.bitmap2Bytes(bitmap, Bitmap.CompressFormat.PNG,100);
+            result = Base64.encodeToString(bitmapBytes, Base64.DEFAULT);
         }
         return result;
     }
