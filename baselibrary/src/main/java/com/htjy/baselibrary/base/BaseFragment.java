@@ -260,7 +260,7 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
     }
 
     @Override
-    public void showProgress() {
+    public void showProgress(String hint) {
         if (progress == null && isAdded()) {
             progress = new ProgressDialog(getActivity());
             progress.show();

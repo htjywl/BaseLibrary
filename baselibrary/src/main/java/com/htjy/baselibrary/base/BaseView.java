@@ -11,7 +11,7 @@ public interface BaseView {
     /**
      * 显示loading框
      */
-    void showProgress();
+    void showProgress(String hint);
 
     /**
      * 隐藏loading框

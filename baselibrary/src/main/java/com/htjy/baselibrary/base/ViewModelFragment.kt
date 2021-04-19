@@ -3,6 +3,7 @@ package com.htjy.baselibrary.base
 import android.os.Bundle
 import android.view.View
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.htjy.baselibrary.base.BaseFragment
 import com.htjy.baselibrary.base.BaseViewModel
@@ -54,6 +55,40 @@ abstract class ViewModelFragment<VB : ViewDataBinding, VM : BaseViewModel> : Bas
 
     override fun initBeforeInitView() {
         mViewModel = createViewModel()
+        registerDefUIChange()
+    }
+
+    /**
+     * 注册 UI 事件
+     */
+    private fun registerDefUIChange() {
+        mViewModel.loadingChange.showDialog.observeInFragment(this, Observer {
+            showProgress(it)
+        })
+        mViewModel.loadingChange.dismissDialog.observeInFragment(this, Observer {
+            hideProgress()
+        })
+
+        lifecycle.addObserver(mViewModel)
+    }
+
+    /**
+     * 将非该Fragment绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
+     * @param viewModels Array<out BaseViewModel>
+     */
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel) {
+        viewModels.forEach { viewModel ->
+            //显示弹窗
+            viewModel.loadingChange.showDialog.observeInFragment(this, Observer {
+                showProgress(it)
+            })
+            //关闭弹窗
+            viewModel.loadingChange.dismissDialog.observeInFragment(this, Observer {
+                hideProgress()
+            })
+
+            lifecycle.addObserver(viewModel)
+        }
     }
 
 

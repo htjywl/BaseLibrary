@@ -253,7 +253,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
 
 
     @Override
-    public void showProgress() {
+    public void showProgress(String hint) {
         if (progress == null) {
             progress = new ProgressDialog(activity);
         }
