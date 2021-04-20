@@ -1,7 +1,9 @@
 package com.htjy.baselibrary.base;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 
 import androidx.annotation.Nullable;
@@ -16,8 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.htjy.baselibrary.utils.temp.DialogUtils;
+import com.htjy.baselibrary.widget.LoadingProgressDialog;
 import com.htjy.baselibrary.widget.imageloader.listener.KeyboardChangeListener;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 
@@ -34,7 +39,7 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
 
 
     protected Activity activity;
-    protected ProgressDialog progress;
+    protected LoadingProgressDialog progress;
     protected boolean hasBus = false;
     protected boolean hasListenerForKey = false;
     protected View noDataStubView;
@@ -254,19 +259,29 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
 
     @Override
     public void showProgress(String hint) {
-        if (progress == null) {
-            progress = new ProgressDialog(activity);
-        }
-        if (!isFinishing() && !progress.isShowing()) {
-            progress.show();
+        Dialog progressDialog = getProgressDialog(this);
+        if (progressDialog != null && !progressDialog.isShowing() && ActivityUtils.isActivityAlive(this)) {
+            progressDialog.show();
         }
     }
 
     @Override
     public void hideProgress() {
-        if (progress != null && progress.isShowing()) {
+        if (progress != null && progress.isShowing() && ActivityUtils.isActivityAlive(this)) {
             progress.hide();
         }
+    }
+
+    /**
+     * 进度对话框
+     * @return
+     */
+    public Dialog getProgressDialog(Context context) {
+        if (ActivityUtils.isActivityAlive(context) && progress == null) {
+            progress = new LoadingProgressDialog(context);
+
+        }
+        return progress;
     }
 
     @Override
