@@ -1,11 +1,13 @@
 package com.htjy.baselibrary.base;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -18,7 +20,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.htjy.baselibrary.widget.LoadingProgressDialog;
 import com.trello.rxlifecycle3.components.support.RxFragment;
 
 
@@ -41,7 +45,7 @@ import butterknife.Unbinder;
  */
 public abstract class BaseFragment extends RxFragment implements BaseView {
 
-    private ProgressDialog progress;
+    private LoadingProgressDialog progress;
     protected boolean hasBus = false;
     protected Activity mActivity;
     private View inflateView;
@@ -259,19 +263,27 @@ public abstract class BaseFragment extends RxFragment implements BaseView {
         super.onAttach(context);
     }
 
-    @Override
     public void showProgress(String hint) {
-        if (progress == null && isAdded()) {
-            progress = new ProgressDialog(getActivity());
-            progress.show();
+        Dialog progressDialog = this.getProgressDialog(getContext());
+        if (progressDialog != null && !progressDialog.isShowing() && ActivityUtils.isActivityAlive(getContext()) && isAdded()) {
+            progressDialog.show();
         }
+
     }
 
-    @Override
     public void hideProgress() {
-        if (progress != null && progress.isShowing() && isAdded()) {
-            progress.hide();
+        if (this.progress != null && this.progress.isShowing() && ActivityUtils.isActivityAlive(getContext()) && isAdded()) {
+            this.progress.hide();
         }
+
+    }
+
+    public Dialog getProgressDialog(Context context) {
+        if (ActivityUtils.isActivityAlive(context) && this.progress == null && isAdded()) {
+            this.progress = new LoadingProgressDialog(context);
+        }
+
+        return this.progress;
     }
 
     @Override
