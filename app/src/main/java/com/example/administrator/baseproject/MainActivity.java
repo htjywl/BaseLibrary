@@ -1,52 +1,53 @@
 package com.example.administrator.baseproject;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.administrator.baseproject.bean.TestBean;
+import com.example.administrator.baseproject.databinding.ActivityMainBinding;
+import com.htjy.baselibrary.base.BaseAcitvity;
 import com.htjy.baselibrary.bean.JavaBaseBean;
 import com.htjy.baselibrary.http.base.JsonDialogCallback;
+import com.htjy.baselibrary.utils.DialogUtils;
 import com.htjy.baselibrary.utils.LogUtils;
-import com.htjy.baselibrary.widget.imageloader.ImageLoaderUtil;
-import com.lyb.besttimer.pluginwidget.utils.FragmentUtil;
 import com.lzy.okgo.OkGo;
 import com.lzy.okgo.model.Response;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseAcitvity {
+
+    private ActivityMainBinding mainBinding;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected boolean isBinding() {
+        return true;
+    }
 
-        final ImageView iv = findViewById(R.id.iv_head);
-        TextView tv_test1 = findViewById(R.id.tv_test1);
-        TextView tv_test2 = findViewById(R.id.tv_test2);
-        FrameLayout frameLayout = findViewById(R.id.fl_content);
-        ViewPager viewpager = findViewById(R.id.viewpager);
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tab_layout);
+    @Override
+    protected void setContentViewByBinding(int layoutId) {
+        mainBinding = getContentViewByBinding(layoutId);
+    }
 
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
 
-        mTabLayout.addTab(mTabLayout.newTab().setText("test1"));
-        mTabLayout.addTab(mTabLayout.newTab().setText("test2"));
-        viewpager.setAdapter(new TestFragmentAdapter(getSupportFragmentManager(), "test1","test2"));
-        mTabLayout.setupWithViewPager(viewpager);
+    @Override
+    protected void initViews(Bundle savedInstanceState) {
 
-        tv_test1.setOnClickListener(new View.OnClickListener() {
+        mainBinding.tabLayout.addTab(mainBinding.tabLayout.newTab().setText("test1"));
+        mainBinding.tabLayout.addTab(mainBinding.tabLayout.newTab().setText("test2"));
+        mainBinding.viewpager.setAdapter(new TestFragmentAdapter(getSupportFragmentManager(), "test1", "test2"));
+        mainBinding.tabLayout.setupWithViewPager(mainBinding.viewpager);
+
+        mainBinding.tvTest1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ImageLoaderUtil.getInstance().loadCircleBorderImage("http://img.taopic.com/uploads/allimg/140729/240450-140HZP45790.jpg", R.color.transparent
-                        , iv, 20, getResources().getColor(R.color.red));
+                DialogUtils.showSimpleDialog(activity, "000", null);
+                DialogUtils.showConfirmDialog(activity, "123", "456", null, null);
             }
         });
-        tv_test2.setOnClickListener(new View.OnClickListener() {
+        mainBinding.tvTest2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 OkGo.<JavaBaseBean<TestBean>>get("http://www.baokaodaxue.com/yd/Bkdxsecond_Startload/getConfig")
@@ -62,15 +63,40 @@ public class MainActivity extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    @Override
+    protected void initData() {
 
     }
 
-    private void showFragment(Class<? extends Fragment> fragmentClass) {
-        FragmentUtil.replace(
-                getSupportFragmentManager(),
-                R.id.fl_content,
-                fragmentClass,
-                null,
-                fragmentClass.toString());
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initStateLayout() {
+
+    }
+
+    @Override
+    public void showNullLayout() {
+
+    }
+
+    @Override
+    public void showErrorLayout() {
+
+    }
+
+    @Override
+    public void showSuccessLayout() {
+
+    }
+
+    @Override
+    public void showNetWorkErrorLayout() {
+
     }
 }

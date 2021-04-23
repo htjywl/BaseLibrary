@@ -19,41 +19,37 @@ import com.htjy.baselibrary.widget.imageloader.listener.ImageSaveListener;
 public interface BaseImageLoaderStrategy {
     //无占位图
     void loadImage(Object url, ImageView imageView);
-    
+
+    void loadImage(Object url, int placeholder, ImageView imageView);
+
+    void loadImage(Context context, Object url, int placeholder, ImageView imageView);
 
     //这里的context指定为ApplicationContext
     void loadImageWithAppCxt(Object url, ImageView imageView);
 
-    void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px);
-    
-
-    void loadImage(Object url, int placeholder, ImageView imageView);
-
     void loadImageWithListener(Object url, int placeholder, ImageView imageView, ImageLoadListener listener);
 
-    void loadImage(Context context, Object url, int placeholder, ImageView imageView);
+    void loadCenterCropWithCorner(Context context, Object model, ImageView imageView, int corner_px);
+
+    void loadCenterCropWithCorner(Context context, Object model, int placeholder, ImageView imageView, int corner_px);
 
     void loadCircleImage(Object url, int placeholder, ImageView imageView);
+
     void loadCentercropCircleImage(Object model, int placeholder, ImageView imageView);
 
-
     void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView);
-    void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView,ImageLoadListener listener);
-     void loadCircleImage(Object url, int placeholder, ImageView imageView, ImageLoadListener listener);
-    void loadCircleBorderImage(Object url, int placeholder, ImageView imageView, float borderWidth, int borderColor);
 
+    void loadCircleImage(Bitmap bitmap, int placeholder, ImageView imageView, ImageLoadListener listener);
+
+    void loadCircleImage(Object url, int placeholder, ImageView imageView, ImageLoadListener listener);
+
+    void loadCircleBorderImage(Object url, int placeholder, ImageView imageView, float borderWidth, int borderColor);
 
     void loadCornerImage(Bitmap bitmap, int placeholder, ImageView imageView, int dp);
 
     void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp);
 
-//    void loadGifImage(Object url, int placeholder, ImageView imageView);
-
-//    void loadImageWithProgress(Object url, ImageView imageView, ProgressLoadListener listener);
-
-//    void loadImageWithPrepareCall(Object url, ImageView imageView, int placeholder, SourceReadyListener listener);
-
-//    void loadGifWithPrepareCall(Object url, ImageView imageView, SourceReadyListener listener);
+    void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp, ImageLoadListener listener);
 
     //清除硬盘缓存
     void clearImageDiskCache(final Context context);
@@ -70,7 +66,6 @@ public interface BaseImageLoaderStrategy {
     void saveImage(Context context, Object url, String savePath, String saveFileName, ImageSaveListener listener);
 
     void downloadOnly(Context context, String url, ImageDownloadListener listener);
-    void loadCornerImage(Object url, int placeholder, ImageView imageView, int dp, ImageLoadListener listener);
 
     void loadDrawable(Context context, Object url, ImageDrawableListener listener);
 }

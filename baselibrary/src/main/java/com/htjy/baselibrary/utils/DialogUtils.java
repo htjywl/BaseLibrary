@@ -27,12 +27,12 @@ public class DialogUtils {
 
     public static Dialog showChooseDialog(Activity activity, List<String> chooseList, AdapterPosClick<String> adapterPosClick) {
 
-        AlertDialog alertDialog=new AlertDialog.Builder(activity)
+        AlertDialog alertDialog = new AlertDialog.Builder(activity, R.style.MyAlertDialog)
                 .setItems(chooseList.toArray(new String[]{}), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        if (adapterPosClick!=null){
-                            adapterPosClick.onClick(chooseList.get(which),which);
+                        if (adapterPosClick != null) {
+                            adapterPosClick.onClick(chooseList.get(which), which);
                         }
                     }
                 })
@@ -56,7 +56,7 @@ public class DialogUtils {
     public static Dialog showConfirmDialog(Context context, String title,
                                            String msg, final DialogAction okAction,
                                            final DialogAction cancelAction) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialog);
         if (title != null) {
             builder.setTitle(title);
         }
@@ -91,16 +91,17 @@ public class DialogUtils {
         dlg.show();
         return dlg;
     }
+
     /**
      * 确认对话框
      *
-     * @param context      调用Activity
-     * @param msg          消息
-     * @param okAction     点确认按钮后的处理接口
+     * @param context  调用Activity
+     * @param msg      消息
+     * @param okAction 点确认按钮后的处理接口
      * @return
      */
     public static Dialog showSimpleDialog(Context context, String msg, final DialogAction okAction) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.MyAlertDialog);
         builder.setMessage(msg);
         builder.setPositiveButton("确定",
                 new DialogInterface.OnClickListener() {
@@ -126,8 +127,8 @@ public class DialogUtils {
             super(context);
         }
 
-        public DefaultProgressDialog(Context context,int themeResId) {
-            super(context,themeResId);
+        public DefaultProgressDialog(Context context, int themeResId) {
+            super(context, themeResId);
         }
 
         @Override

@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="default_popupWindow_anim_style">
         <item name="android:windowEnterAnimation">@anim/popupwindow_show_anim</item>
-    <item name="android:windowExitAnimation">@anim/popupwindow_hide_anim</item>
+        <item name="android:windowExitAnimation">@anim/popupwindow_hide_anim</item>
     </style>
 
+    <style name="MyAlertDialog" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <!-- 竖屏模式下dialog的宽度 -->
+        <item name="android:windowMinWidthMajor">270dp</item>
+        <item name="android:windowMinWidthMinor">270dp</item>
+        <item name="windowFixedWidthMinor">270dp</item>
+    </style>
 </resources>

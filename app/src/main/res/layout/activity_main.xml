@@ -1,61 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+<layout>
 
-
-    <LinearLayout
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content">
-        <TextView
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-            android:id="@+id/tv_test1"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/black"
-            android:text="test1"
-            android:layout_width="100dp"
-            android:layout_height="50dp" />
 
-        <TextView
-            android:id="@+id/tv_test2"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:background="@color/black"
-            android:text="test2"
-            android:layout_width="100dp"
-            android:layout_height="50dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+
+                android:id="@+id/tv_test1"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@color/black"
+                android:gravity="center"
+                android:text="test1"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_test2"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@color/black"
+                android:gravity="center"
+                android:text="test2"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp" />
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </android.support.v4.view.ViewPager>
+
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="100dp">
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/iv_head"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
     </LinearLayout>
-
-    <android.support.design.widget.TabLayout
-        android:id="@+id/tab_layout"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"/>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-    </android.support.v4.view.ViewPager>
-
-    <FrameLayout
-        android:id="@+id/fl_content"
-        android:layout_width="match_parent"
-        android:layout_height="100dp">
-
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/iv_head"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
-
-
-
-</LinearLayout>
+</layout>
