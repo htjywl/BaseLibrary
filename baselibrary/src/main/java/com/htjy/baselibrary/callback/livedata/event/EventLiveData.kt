@@ -1,7 +1,6 @@
-package com.htjy.baselibrary.bean
+package com.anxinjia.common.base.callback.livedata.event
 
 import com.kunminx.architecture.ui.callback.UnPeekLiveData
-
 
 /**
  * 最新版的发送消息LiveData使用 https://github.com/KunMinX/UnPeek-LiveData 的最新版，因为跟其他类名（UnPeekLiveData）一致 所以继承换了一个名字
