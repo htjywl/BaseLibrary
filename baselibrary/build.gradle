@@ -1,9 +1,9 @@
 apply plugin: 'com.android.library'
-// 这里添加下面两行代码。
-apply plugin: 'com.github.dcendents.android-maven' //this way we can find the android-maven in jcenter
-group='com.github.htjyandroid'
+
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+
+apply from: rootProject.file('publish-mavencentral.gradle')
 
 android {
     compileSdkVersion  rootProject.ext.android["compileSdkVersion"]
