@@ -7,6 +7,16 @@ ext["signing.secretKeyRingFile"] = ''
 ext["ossrhUsername"] = ''
 ext["ossrhPassword"] = ''
 
+//打包main目录下代码和资源的 task
+task androidSourcesJar(type: Jar) {
+    classifier = 'sources'
+    from android.sourceSets.main.java.srcDirs
+}
+//配置需要上传到maven仓库的文件
+artifacts {
+    archives androidSourcesJar
+}
+
 File secretPropsFile = project.rootProject.file('local.properties')
 if (secretPropsFile.exists()) {
     println "Found secret props file, loading props"
@@ -27,7 +37,7 @@ signing {
 
 group = 'io.github.htjywl'
 archivesBaseName = "com.htjy.baselibraryx"
-version = '2.2.5'
+version = '2.2.7'
 
 uploadArchives {
     repositories {

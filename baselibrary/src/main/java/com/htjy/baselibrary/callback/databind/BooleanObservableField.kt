@@ -1,5 +1,4 @@
-package com.anxinjia.common.base.callback.databind
-
+package com.htjy.baselibrary.callback.databind
 import androidx.databinding.ObservableField
 
 /**

@@ -1,4 +1,4 @@
-package com.anxinjia.common.base.callback.livedata
+package com.htjy.baselibrary.callback.livedata
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
