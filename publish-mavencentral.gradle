@@ -37,7 +37,7 @@ signing {
 
 group = 'io.github.htjywl'
 archivesBaseName = "com.htjy.baselibraryx"
-version = '2.2.7'
+version = '2.2.9'
 
 uploadArchives {
     repositories {
