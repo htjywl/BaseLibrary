@@ -2,15 +2,8 @@ package com.htjy.baselibrary.base;
 
 import android.app.Activity;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-
-import androidx.annotation.Nullable;
-import androidx.databinding.DataBindingUtil;
-import androidx.databinding.ViewDataBinding;
-import androidx.fragment.app.Fragment;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -18,14 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
+import androidx.annotation.Nullable;
+import androidx.databinding.DataBindingUtil;
+import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
+
 import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.FragmentUtils;
 import com.blankj.utilcode.util.ToastUtils;
-import com.htjy.baselibrary.utils.temp.DialogUtils;
 import com.htjy.baselibrary.widget.LoadingProgressDialog;
 import com.htjy.baselibrary.widget.imageloader.listener.KeyboardChangeListener;
 import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
-
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -87,7 +83,11 @@ public abstract class BaseActivity extends RxAppCompatActivity implements BaseVi
         hasBus = haveBus();
 
         if (haveBus()) {
-            EventBus.getDefault().register(this);
+            try {
+                EventBus.getDefault().register(this);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         hasListenerForKey = haveListenerForKey();
         if (hasListenerForKey) {
