@@ -3,7 +3,7 @@ package com.htjy.baselibrary.base
 import android.util.Log
 import androidx.lifecycle.*
 import com.blankj.utilcode.util.ToastUtils
-import com.htjy.baselibrary.callback.livedata.event.EventLiveData
+import com.htjy.baselibrary.livedata.event.EventLiveData
 
 
 open class BaseViewModel : ViewModel(), ViewModelLifecycle, ViewBehavior {
